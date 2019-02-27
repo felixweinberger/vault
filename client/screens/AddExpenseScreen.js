@@ -17,16 +17,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class SettingsScreen extends React.Component {
+export default class AddExpenseScreen extends React.Component {
   static navigationOptions = {
-    title: 'Settings',
+    title: 'Add Expense',
   };
 
   render() {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Text style={styles.contentText}>
-          WIP: Settings page
+          WIP: Summary page
         </Text>
       </ScrollView>
     );

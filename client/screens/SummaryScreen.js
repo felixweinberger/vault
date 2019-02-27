@@ -1,5 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,16 +21,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class SettingsScreen extends React.Component {
+export default class SummaryScreen extends React.Component {
   static navigationOptions = {
-    title: 'Settings',
+    title: 'Summary',
   };
 
   render() {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Text style={styles.contentText}>
-          WIP: Settings page
+          WIP: Summary page
         </Text>
       </ScrollView>
     );

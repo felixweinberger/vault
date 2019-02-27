@@ -3,15 +3,15 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import SummaryScreen from '../screens/SummaryScreen';
+import AddExpenseScreen from '../screens/AddExpenseScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+const SummaryStack = createStackNavigator({
+  Summary: SummaryScreen,
 });
 
-HomeStack.navigationOptions = {
+SummaryStack.navigationOptions = {
   tabBarLabel: 'Summary',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -21,11 +21,11 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const AddExpenseStack = createStackNavigator({
+  AddExpense: AddExpenseScreen,
 });
 
-LinksStack.navigationOptions = {
+AddExpenseStack.navigationOptions = {
   tabBarLabel: 'Add Expense',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -54,7 +54,7 @@ SettingsStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
+  SummaryStack,
+  AddExpenseStack,
   SettingsStack,
 });
