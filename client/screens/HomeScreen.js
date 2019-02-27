@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Home',
   };
 
   render() {
