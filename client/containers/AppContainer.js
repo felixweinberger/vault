@@ -11,7 +11,7 @@ import {
   Font,
   Icon,
 } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
+import AppNavigator from '../navigation/AppNavigator';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,8 +46,8 @@ export default class App extends React.Component {
 
   loadResourcesAsync = async () => Promise.all([
     Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
+      require('../assets/images/robot-dev.png'),
+      require('../assets/images/robot-prod.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
