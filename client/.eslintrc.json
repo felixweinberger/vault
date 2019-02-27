@@ -2,7 +2,8 @@
   "parser": "babel-eslint",
   "plugins": [
     "react",
-    "react-native"
+    "react-native",
+    "json"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -15,9 +16,17 @@
     "plugin:react/recommended",
     "airbnb-base"
   ],
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "^16.5.2"
+    }
+  },
   "rules": {
     "arrow-body-style": "warn",
     "global-require": 0,
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "react/prop-types": 0,
+    "react/display-name": 0
   }
 }

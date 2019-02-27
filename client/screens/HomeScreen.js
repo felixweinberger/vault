@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
-import { MonoText } from '../components/StyledText';
+import MonoText from '../components/StyledText';
 
 const styles = StyleSheet.create({
   container: {
