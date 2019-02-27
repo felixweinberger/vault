@@ -17,6 +17,7 @@
   ],
   "rules": {
     "arrow-body-style": "warn",
-    "global-require": 0
+    "global-require": 0,
+    "class-methods-use-this": "off"
   }
 }
