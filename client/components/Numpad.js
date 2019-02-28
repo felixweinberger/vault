@@ -25,28 +25,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
-    borderColor: '#fff',
+    margin: 0.5,
+    fontSize: 50,
   },
   numpad__zeroComma: {
     flex: 1,
     flexDirection: 'row',
   },
   numpad__zero: {
-    flex: 2,
-    backgroundColor: 'lightgrey',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 0.5,
-    borderColor: '#fff',
-  },
-  numpad__comma: {
     flex: 1,
     backgroundColor: 'lightgrey',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0.5,
-    borderColor: '#fff',
+    margin: 0.5,
   },
   numpadRight: {
     flex: 1,
@@ -56,48 +47,45 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'orange',
-    borderWidth: 0.5,
-    borderColor: '#fff',
+    margin: 0.5,
   },
   numpad__submit: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'lightgreen',
-    borderWidth: 0.5,
-    borderColor: '#fff',
+    margin: 0.5,
   },
 });
 
-export default function Numpad() {
+export default function Numpad(props) {
   return (
     <View style={styles.numpad}>
       <View style={styles.numpadLeft}>
         <View style={styles.numpad__oneToNine}>
           <View style={styles.numpad__row}>
-            <NumpadButton value={1} style={styles.numpad__number} />
-            <NumpadButton value={2} style={styles.numpad__number} />
-            <NumpadButton value={3} style={styles.numpad__number} />
+            <NumpadButton value={1} style={styles.numpad__number} onPress={props.onNumpadPress} />
+            <NumpadButton value={2} style={styles.numpad__number} onPress={props.onNumpadPress} />
+            <NumpadButton value={3} style={styles.numpad__number} onPress={props.onNumpadPress} />
           </View>
           <View style={styles.numpad__row}>
-            <NumpadButton value={4} style={styles.numpad__number} />
-            <NumpadButton value={5} style={styles.numpad__number} />
-            <NumpadButton value={6} style={styles.numpad__number} />
+            <NumpadButton value={4} style={styles.numpad__number} onPress={props.onNumpadPress} />
+            <NumpadButton value={5} style={styles.numpad__number} onPress={props.onNumpadPress} />
+            <NumpadButton value={6} style={styles.numpad__number} onPress={props.onNumpadPress} />
           </View>
           <View style={styles.numpad__row}>
-            <NumpadButton value={7} style={styles.numpad__number} />
-            <NumpadButton value={8} style={styles.numpad__number} />
-            <NumpadButton value={9} style={styles.numpad__number} />
+            <NumpadButton value={7} style={styles.numpad__number} onPress={props.onNumpadPress} />
+            <NumpadButton value={8} style={styles.numpad__number} onPress={props.onNumpadPress} />
+            <NumpadButton value={9} style={styles.numpad__number} onPress={props.onNumpadPress} />
           </View>
         </View>
         <View style={styles.numpad__zeroComma}>
-          <NumpadButton value={0} style={styles.numpad__zero} />
-          <NumpadButton value={','} style={styles.numpad__comma} />
+          <NumpadButton value={0} style={styles.numpad__zero} onPress={props.onNumpadPress} />
         </View>
       </View>
       <View style={styles.numpadRight}>
-        <NumpadButton value={'⇤'} style={styles.numpad__back} />
-        <NumpadButton value={'↩︎'} style={styles.numpad__submit} />
+        <NumpadButton value={'⇤'} style={styles.numpad__back} onPress={props.onNumpadPress} />
+        <NumpadButton value={'↩︎'} style={styles.numpad__submit} onPress={props.onNumpadPress} />
       </View>
     </View>
   );

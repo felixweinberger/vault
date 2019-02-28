@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, Text,
+  View, StyleSheet, Text, Platform,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -8,11 +8,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     marginRight: 24,
   },
   amount__value: {
     fontSize: 50,
+    fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : 'monospace',
     color: 'rgba(96,100,109, 1)',
   },
   amount__currency: {

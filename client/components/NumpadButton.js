@@ -4,15 +4,12 @@ import {
 } from 'react-native';
 
 export default function NumpadButton(props) {
-  const onPressButton = () => {
-    console.log(props.value); // eslint-disable-line no-console
-  };
-
+  const onPress = () => props.onPress(props.value);
   return (
     <TouchableOpacity
       style={props.style}
       underlayColor="white"
-      onPress={onPressButton}
+      onPress={onPress}
     >
       <Text>{props.value}</Text>
     </TouchableOpacity>
