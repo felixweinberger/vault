@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 
 import AppContainer from './containers/AppContainer';
 import reducers from './redux/reducers';
-import model from './db/model';
 
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
@@ -15,10 +14,6 @@ const store = createStore(
 /* eslint-enable */
 
 export default class App extends React.Component {
-  componentDidMount() {
-    model.createExpenseTable();
-  }
-
   render() {
     return (
       <Provider store={store}>
