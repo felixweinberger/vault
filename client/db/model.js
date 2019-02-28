@@ -21,22 +21,27 @@ model.createExpenseTable = async () => {
 };
 
 model.addExpense = async (expense) => {
-  return expense;
+  // TODO
+  const res = expense;
+  return res;
 };
 
 model.deleteExpense = async (expenseId) => {
   // TODO
-  return expenseId;
+  const res = expenseId;
+  return res;
 };
 
 model.modifyExpense = async (expense) => {
   // TODO
-  return expense;
+  const res = expense;
+  return res;
 };
 
 model.changeSettings = async (expense) => {
   // TODO
-  return expense;
+  const res = expense;
+  return res;
 };
 
 export default model;
