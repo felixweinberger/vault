@@ -13,7 +13,7 @@ export const modifyExpense = expense => ({
   expense,
 });
 
-export const changeSettings = settings => ({
-  type: 'CHANGE_SETTINGS',
+export const modifySettings = settings => ({
+  type: 'MODIFY_SETTINGS',
   settings,
 });

@@ -22,7 +22,7 @@ const expenses = (state = [], action) => {
 
 const settings = (state = {}, action) => {
   switch (action.type) {
-    case 'CHANGE_SETTINGS': {
+    case 'MODIFY_SETTINGS': {
       // TODO
       return 0;
     }

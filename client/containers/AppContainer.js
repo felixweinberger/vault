@@ -11,7 +11,15 @@ import {
   Font,
   Icon,
 } from 'expo';
+import { connect } from 'react-redux';
+
 import AppNavigator from '../navigation/AppNavigator';
+import {
+  addExpense,
+  deleteExpense,
+  modifyExpense,
+  modifySettings,
+} from '../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
@@ -64,16 +72,19 @@ export default class App extends React.Component {
   };
 }
 
-// const mapStateToProps = (state) => ({
-//   events: state.events,
-// });
+const mapStateToProps = state => ({
+  expenses: state.expenses,
+  settings: state.settings,
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//   updateEvents: events => dispatch(updateEvents(events)),
-//   addEvent: event => dispatch(addEvent(event)),
-// });
+const mapDispatchToProps = dispatch => ({
+  addExpense: expense => dispatch(addExpense(expense)),
+  deleteExpense: expenseId => dispatch(deleteExpense(expenseId)),
+  modifyExpense: expense => dispatch(modifyExpense(expense)),
+  modifySettings: settings => dispatch(modifySettings(settings)),
+});
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
