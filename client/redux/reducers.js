@@ -20,6 +20,26 @@ const expenses = (state = [], action) => {
   }
 };
 
+const currentExpense = (state = { amount: 0 }, action) => {
+  switch (action.type) {
+    case 'SUBMIT_NEW_AMOUNT': {
+      // TODO
+      return 0;
+    }
+    case 'SUBMIT_NEW_EXPENSE': {
+      // TODO
+      return 0;
+    }
+    case 'CANCEL_NEW_EXPENSE': {
+      // TODO
+      return 0;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const settings = (state = {}, action) => {
   switch (action.type) {
     case 'MODIFY_SETTINGS': {
@@ -34,6 +54,7 @@ const settings = (state = {}, action) => {
 
 const reducers = combineReducers({
   expenses,
+  currentExpense,
   settings,
 });
 

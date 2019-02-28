@@ -17,3 +17,17 @@ export const modifySettings = settings => ({
   type: 'MODIFY_SETTINGS',
   settings,
 });
+
+export const submitNewAmount = amount => ({
+  type: 'SUBMIT_NEW_AMOUNT',
+  amount,
+});
+
+export const submitNewExpense = expense => ({
+  type: 'SUBMIT_NEW_EXPENSE',
+  expense,
+});
+
+export const cancelNewExpense = () => ({
+  type: 'CANCEL_NEW_EXPENSE',
+});
