@@ -1,24 +1,15 @@
 import React from 'react';
 import {
-  Platform,
-  StatusBar,
-  StyleSheet,
-  View,
+  Platform, StatusBar, StyleSheet, View,
 } from 'react-native';
 import {
-  AppLoading,
-  Asset,
-  Font,
-  Icon,
+  AppLoading, Asset, Font, Icon,
 } from 'expo';
 import { connect } from 'react-redux';
 
 import AppNavigator from '../navigation/AppNavigator';
 import {
-  addExpense,
-  deleteExpense,
-  modifyExpense,
-  modifySettings,
+  addExpense, deleteExpense, modifyExpense, modifySettings,
 } from '../redux/actions';
 
 const styles = StyleSheet.create({
