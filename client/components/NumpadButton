@@ -1,0 +1,135 @@
+import React from 'react';
+import {
+  View, StyleSheet, Text, TouchableOpacity,
+} from 'react-native';
+
+const styles = StyleSheet.create({
+  numpad: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  numpadLeft: {
+    flex: 3,
+  },
+  numpad__oneToNine: {
+    flex: 3,
+  },
+  numpad__row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  numpad__number: {
+    flex: 1,
+    backgroundColor: 'lightgrey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: '#fff',
+  },
+  numpad__zeroComma: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  numpad__zero: {
+    flex: 2,
+    backgroundColor: 'lightgrey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: '#fff',
+  },
+  numpad__comma: {
+    flex: 1,
+    backgroundColor: 'lightgrey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: '#fff',
+  },
+  numpadRight: {
+    flex: 1,
+  },
+  numpad__back: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'orange',
+    borderWidth: 0.5,
+    borderColor: '#fff',
+  },
+  numpad__submit: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'lightgreen',
+    borderWidth: 0.5,
+    borderColor: '#fff',
+  },
+});
+
+export default class Numpad extends React.Component {
+  render() {
+    return (
+      <View style={styles.numpad}>
+        <View style={styles.numpadLeft}>
+          <View style={styles.numpad__oneToNine}>
+            <View style={styles.numpad__row}>
+              <TouchableOpacity
+                style={styles.numpad__number}
+                underlayColor="white"
+                onPress={this.onPressButton}
+              >
+                <Text>1</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>2</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>3</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.numpad__row}>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>4</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>5</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>6</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.numpad__row}>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>7</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>8</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.numpad__number} underlayColor="white">
+                <Text>9</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.numpad__zeroComma}>
+            <TouchableOpacity style={styles.numpad__zero} underlayColor="white">
+              <Text>0</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.numpad__comma} underlayColor="white">
+              <Text>,</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.numpadRight}>
+          <TouchableOpacity style={styles.numpad__back} underlayColor="white">
+            <Text>⇤</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.numpad__submit} underlayColor="white">
+            <Text>↩︎</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
