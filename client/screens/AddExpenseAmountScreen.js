@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class AddExpenseScreen extends React.Component {
+class AddExpenseAmountScreen extends React.Component {
   static navigationOptions = {
     title: 'Add Expense',
   };
@@ -24,6 +24,7 @@ class AddExpenseScreen extends React.Component {
   state = {
     amount: 0,
     pretty: '0.00',
+    currency: '€ EUR',
   };
 
   updateState = (amount) => {
@@ -43,14 +44,15 @@ class AddExpenseScreen extends React.Component {
       const amount = Number(amountString.slice(0, amountString.length - 1));
       this.updateState(amount);
     } else if (value === '↩︎') {
-      // TODO
+      this.props.submitNewAmount(this.state);
+      this.props.navigation.navigate('AddDetails');
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <AddAmount value={this.state.pretty} currency={'€ EUR'} />
+        <AddAmount value={this.state.pretty} currency={this.state.currency} />
         <Numpad onNumpadPress={this.onNumpadPress}/>
       </View>
     );
@@ -62,10 +64,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  submitNewAmount: amount => dispatch(submitNewAmount(amount)),
+  submitNewAmount: expenseAmount => dispatch(submitNewAmount(expenseAmount)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddExpenseScreen);
+)(AddExpenseAmountScreen);

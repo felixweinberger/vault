@@ -4,7 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import SummaryScreen from '../screens/SummaryScreen';
-import AddExpenseScreen from '../screens/AddExpenseScreen';
+import AddExpenseAmountScreen from '../screens/AddExpenseAmountScreen';
+import AddExpenseDetailsScreen from '../screens/AddExpenseDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const SummaryStack = createStackNavigator({
@@ -22,7 +23,8 @@ SummaryStack.navigationOptions = {
 };
 
 const AddExpenseStack = createStackNavigator({
-  AddExpense: AddExpenseScreen,
+  AddAmount: AddExpenseAmountScreen,
+  AddDetails: AddExpenseDetailsScreen,
 });
 
 AddExpenseStack.navigationOptions = {
