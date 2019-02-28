@@ -20,11 +20,15 @@ const expenses = (state = [], action) => {
   }
 };
 
-const currentExpense = (state = { amount: 0 }, action) => {
+const currentExpense = (state = {}, action) => {
   switch (action.type) {
     case 'SUBMIT_NEW_AMOUNT': {
-      // TODO
-      return 0;
+      const newState = {
+        amount: action.expenseAmount.amount,
+        pretty: action.expenseAmount.pretty,
+        currency: action.expenseAmount.currency,
+      };
+      return newState;
     }
     case 'SUBMIT_NEW_EXPENSE': {
       // TODO

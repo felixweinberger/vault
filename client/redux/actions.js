@@ -18,9 +18,9 @@ export const modifySettings = settings => ({
   settings,
 });
 
-export const submitNewAmount = amount => ({
+export const submitNewAmount = expenseAmount => ({
   type: 'SUBMIT_NEW_AMOUNT',
-  amount,
+  expenseAmount,
 });
 
 export const submitNewExpense = expense => ({
