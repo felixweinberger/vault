@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView, StyleSheet, View, Text, TouchableOpacity,
+  ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput,
 } from 'react-native';
 
 import { submitNewExpense } from '../redux/actions';
@@ -81,7 +81,9 @@ class AddExpenseDetailsScreen extends React.Component {
               <Text>Category</Text>
             </View>
             <View style={styles.option__value}>
-              <Text>Select</Text>
+              <TextInput>
+                Select
+              </TextInput>
             </View>
           </View>
           <View style={styles.option}>
