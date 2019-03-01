@@ -6,6 +6,7 @@ import {
 import DatePicker from 'react-native-datepicker';
 
 import { addExpense, submitNewAmount, clearNewExpense } from '../redux/actions';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e64a19',
+    backgroundColor: Colors.totalBackground,
     fontWeight: 'bold',
   },
   amount__text: {
@@ -54,13 +55,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#321911',
+    backgroundColor: Colors.addButton,
   },
   cancel: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5d4037',
+    backgroundColor: Colors.cancelButton,
   },
   action__text: {
     color: 'white',

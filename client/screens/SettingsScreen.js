@@ -1,17 +1,19 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 
+import Colors from '../constants/Colors';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
   },
   contentContainer: {
     paddingTop: 30,
   },
   contentText: {
     fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
+    color: Colors.placeholderText,
     lineHeight: 24,
     textAlign: 'center',
   },

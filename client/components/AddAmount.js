@@ -14,11 +14,9 @@ const styles = StyleSheet.create({
   amount__value: {
     fontSize: 50,
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : 'monospace',
-    color: 'rgba(96,100,109, 1)',
   },
   amount__currency: {
     fontSize: 25,
-    color: 'rgba(96,100,109, 1)',
   },
 });
 

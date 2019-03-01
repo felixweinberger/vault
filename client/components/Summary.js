@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 
+import Colors from '../constants/Colors';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -14,7 +16,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 2,
     fontWeight: 'bold',
-    backgroundColor: '#e64a19',
+    backgroundColor: Colors.orange6,
     color: 'white',
   },
   item: {
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#efebe9',
+    backgroundColor: Colors.greyLight,
   },
   item__text: {
     paddingLeft: 10,
