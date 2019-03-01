@@ -1,23 +1,19 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
 import AppContainer from './containers/AppContainer';
-import reducers from './redux/reducers';
+import configureStore from './redux/store';
 
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-undef */
-const store = createStore(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-/* eslint-enable */
+const { store, persistor } = configureStore();
 
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <PersistGate loading={null} persistor={persistor}>
+          <AppContainer />
+        </PersistGate>
       </Provider>
     );
   }
