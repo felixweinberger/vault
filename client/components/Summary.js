@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
-    fontSize: 14,
     fontWeight: 'bold',
     backgroundColor: '#e64a19',
     color: 'white',
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
   item: {
     flex: 1,
     flexDirection: 'row',
-    height: 40,
+    height: 50,
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#efebe9',
@@ -40,7 +39,7 @@ export default function Summary(props) {
         text: 'Delete',
         backgroundColor: 'darkred',
         color: 'white',
-        // onPress: props.onDelete(item.id),
+        onPress: () => props.onDelete(item.id),
       },
     ];
     return (

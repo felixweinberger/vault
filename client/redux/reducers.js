@@ -24,12 +24,11 @@ const expenses = (state = [], action) => {
       return [...state, newExpense];
     }
     case 'DELETE_EXPENSE': {
-      // TODO
-      return 0;
+      return state.filter(expense => expense.id !== action.expenseId);
     }
     case 'MODIFY_EXPENSE': {
       // TODO
-      return 0;
+      return state;
     }
     default: {
       return state;
