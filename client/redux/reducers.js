@@ -1,5 +1,16 @@
 import { combineReducers } from 'redux';
 
+const emptyExpense = {
+  amount: 0,
+  pretty: '0.00',
+  currency: '€ EUR',
+  category: null,
+  tags: [],
+  timestamp: null,
+  dateISO: null,
+  date: null,
+};
+
 const expenses = (state = [], action) => {
   switch (action.type) {
     case 'ADD_EXPENSE': {
@@ -20,22 +31,10 @@ const expenses = (state = [], action) => {
   }
 };
 
-const currentExpense = (state = {
-  amount: 0,
-  pretty: '0.00',
-  currency: '€ EUR',
-  category: null,
-  tags: [],
-  timestamp: null,
-  date: null,
-}, action) => {
+const currentExpense = (state = emptyExpense, action) => {
   switch (action.type) {
     case 'SUBMIT_NEW_AMOUNT': {
-      const newState = {
-        amount: action.expenseAmount.amount,
-        pretty: action.expenseAmount.pretty,
-        currency: action.expenseAmount.currency,
-      };
+      const newState = action.expense;
       return newState;
     }
     case 'SUBMIT_NEW_EXPENSE': {
@@ -43,15 +42,7 @@ const currentExpense = (state = {
       return 0;
     }
     case 'CANCEL_NEW_EXPENSE': {
-      return {
-        amount: 0,
-        pretty: '0.00',
-        currency: '€ EUR',
-        category: null,
-        tags: [],
-        timestamp: null,
-        date: null,
-      };
+      return emptyExpense;
     }
     default: {
       return state;
