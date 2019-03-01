@@ -3,6 +3,7 @@ import {
   View, StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationEvents } from 'react-navigation';
 
 import Numpad from '../components/Numpad';
 import AddAmount from '../components/AddAmount';
@@ -28,15 +29,9 @@ class AddExpenseAmountScreen extends React.Component {
     category: null,
     tags: [],
     timestamp: null,
+    dateISO: null,
     date: null,
   };
-
-  componentDidMount() {
-    if (this.props.state !== undefined) {
-      this.setState(this.props.currentExpense);
-    }
-    console.log(this.state);
-  }
 
   updateState = (amount) => {
     const padded = amount.toString().padStart(3, '0');
@@ -45,6 +40,8 @@ class AddExpenseAmountScreen extends React.Component {
     const pretty = `${preComma}.${postComma}`;
     this.setState({ amount, pretty });
   }
+
+  onFocus = () => this.setState({ ...this.props.currentExpense });
 
   onNumpadPress = (value) => {
     if (typeof value === 'number') {
@@ -63,6 +60,7 @@ class AddExpenseAmountScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={this.onFocus} />
         <AddAmount value={this.state.pretty} currency={this.state.currency} />
         <Numpad onNumpadPress={this.onNumpadPress}/>
       </View>
@@ -75,7 +73,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  submitNewAmount: expenseAmount => dispatch(submitNewAmount(expenseAmount)),
+  submitNewAmount: expense => dispatch(submitNewAmount(expense)),
 });
 
 export default connect(
