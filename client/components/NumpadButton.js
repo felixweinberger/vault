@@ -1,7 +1,15 @@
 import React from 'react';
 import {
-  Text, TouchableOpacity,
+  Text, TouchableOpacity, StyleSheet,
 } from 'react-native';
+
+
+const styles = StyleSheet.create({
+  value: {
+    color: 'white',
+  },
+});
+
 
 export default function NumpadButton(props) {
   const onPress = () => props.onPress(props.value);
@@ -11,7 +19,7 @@ export default function NumpadButton(props) {
       underlayColor="white"
       onPress={onPress}
     >
-      <Text>{props.value}</Text>
+      <Text style={styles.value}>{props.value}</Text>
     </TouchableOpacity>
   );
 }

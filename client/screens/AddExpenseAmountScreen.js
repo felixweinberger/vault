@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 
 class AddExpenseAmountScreen extends React.Component {
   static navigationOptions = {
-    title: 'Add Expense',
+    title: 'Add',
   };
 
   state = {
