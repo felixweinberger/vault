@@ -1,6 +1,8 @@
+import uuidv4 from 'uuid/v4';
 import { combineReducers } from 'redux';
 
 const emptyExpense = {
+  id: null,
   amount: 0,
   pretty: '0.00',
   currency: '€ EUR',
@@ -15,7 +17,11 @@ const emptyExpense = {
 const expenses = (state = [], action) => {
   switch (action.type) {
     case 'ADD_EXPENSE': {
-      return [...state, action.expense];
+      const newExpense = {
+        id: uuidv4(),
+        ...action.expense,
+      };
+      return [...state, newExpense];
     }
     case 'DELETE_EXPENSE': {
       // TODO

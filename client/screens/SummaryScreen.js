@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  SectionList, StyleSheet, Text, View,
+  StyleSheet, View,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import { uniq } from 'lodash';
 
 import { deleteExpense } from '../redux/actions';
+import Summary from '../components/Summary';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,12 +20,14 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
     fontSize: 14,
     fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
+    backgroundColor: '#e64a19',
+    color: 'white',
   },
   item: {
     padding: 10,
     fontSize: 18,
     height: 44,
+    backgroundColor: '#efebe9',
   },
 });
 
@@ -39,32 +42,34 @@ class SummaryScreen extends React.Component {
   }
 
   computeSections = () => {
-    const dates = uniq(this.props.expenses.map(expense => expense.date)).sort();
-    const sectionObj = dates.reduce((acc, date) => {
-      acc[date] = { title: date, data: [] };
-      return acc;
-    }, {});
-    this.props.expenses.forEach((expense) => {
-      sectionObj[expense.date].data.push(expense);
-    });
-    this.setState({ sections: Object.values(sectionObj) });
+    if (this.props.expenses.length > 0) {
+      const dates = uniq(this.props.expenses.map(expense => expense.date)).sort();
+      const sectionObj = dates.reduce((acc, date) => {
+        acc[date] = { title: date, data: [] };
+        return acc;
+      }, {});
+      this.props.expenses.forEach((expense) => {
+        sectionObj[expense.date].data.push(expense);
+      });
+      this.setState({ sections: Object.values(sectionObj) });
+    }
   }
 
   onFocus = () => {
     this.computeSections();
   }
 
+  onDelete = (expense) => {
+    this.props.deleteExpense(expense.id);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <NavigationEvents onWillFocus={this.onFocus} />
-        <SectionList
+        <Summary
           sections={this.state.sections}
-          renderItem={({ item }) => <Text style={styles.item}>{item.pretty}</Text>}
-          renderSectionHeader={({ section }) => (
-            <Text style={styles.sectionHeader}>{section.title}</Text>
-          )}
-          keyExtractor={(item, index) => index}
+          onDelete={this.onDelete}
         />
       </View>
     );
