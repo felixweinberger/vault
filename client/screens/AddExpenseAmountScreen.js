@@ -29,7 +29,6 @@ class AddExpenseAmountScreen extends React.Component {
     category: null,
     tags: [],
     timestamp: null,
-    dateISO: null,
     date: null,
     comment: null,
   };

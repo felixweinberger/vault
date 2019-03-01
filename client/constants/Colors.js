@@ -24,4 +24,5 @@ export default {
   greyLight: '#efebe9',
   greyMid: '#5d4037',
   greyDark: '#321911',
+  redDark: '#b71c1c',
 };

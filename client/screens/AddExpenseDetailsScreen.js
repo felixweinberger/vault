@@ -80,7 +80,6 @@ class AddExpenseDetailsScreen extends React.Component {
     category: null,
     tags: [],
     timestamp: null,
-    dateISO: null,
     date: null,
     comment: null,
   };
@@ -172,7 +171,10 @@ class AddExpenseDetailsScreen extends React.Component {
               <Text>Comment</Text>
             </View>
             <View style={styles.option__value}>
-              <TextInput placeholder='Optional' />
+              <TextInput
+                placeholder='Optional'
+                onChangeText={comment => this.setState({ comment })}
+              />
             </View>
           </View>
         </ScrollView>

@@ -9,7 +9,6 @@ const emptyExpense = {
   category: null,
   tags: [],
   timestamp: null,
-  dateISO: null,
   date: null,
   comment: null,
 };

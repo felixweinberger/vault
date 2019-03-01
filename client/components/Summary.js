@@ -27,7 +27,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.greyLight,
   },
-  item__text: {
+  item__category: {
+    fontWeight: 'bold',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  item__comment: {
+    fontStyle: 'italic',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  item__amount: {
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -39,7 +49,7 @@ export default function Summary(props) {
       // { text: 'Edit', backgroundColor: 'skyblue', color: 'white' },
       {
         text: 'Delete',
-        backgroundColor: 'darkred',
+        backgroundColor: Colors.redDark,
         color: 'white',
         onPress: () => props.onDelete(item.id),
       },
@@ -47,8 +57,11 @@ export default function Summary(props) {
     return (
       <Swipeout right={swipeoutBtns}>
         <View style={styles.item}>
-          <Text style={styles.item__text}>{item.category}</Text>
-          <Text style={styles.item__text}>{`${item.pretty} ${item.currency}`}</Text>
+          <View>
+            <Text style={styles.item__category}>{item.category}</Text>
+            <Text style={styles.item__comment}>{item.comment}</Text>
+          </View>
+          <Text style={styles.item__amount}>{`${item.pretty} ${item.currency}`}</Text>
         </View>
       </Swipeout>
     );
