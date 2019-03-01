@@ -94,8 +94,8 @@ class AddExpenseDetailsScreen extends React.Component {
 
   computeSimpleDate = (timestamp) => {
     const date = new Date(timestamp);
-    const dd = date.getDate();
-    const mm = date.getMonth() + 1;
+    const dd = date.getDate().toString().padStart(2, '0');
+    const mm = (date.getMonth() + 1).toString().padStart(2, '0');
     const yyyy = date.getFullYear();
     return `${yyyy}.${mm}.${dd}`;
   }
@@ -160,7 +160,7 @@ class AddExpenseDetailsScreen extends React.Component {
               mode="date"
               placeholder="select date"
               showIcon={false}
-              format="YYYY-MM-DD"
+              format="YYYY.MM.DD"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               onDateChange={date => this.setState({ date })}

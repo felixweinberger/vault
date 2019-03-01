@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   SectionList, StyleSheet, Text, View,
 } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import { uniq } from 'lodash';
 
 import { deleteExpense } from '../redux/actions';
@@ -34,22 +35,32 @@ class SummaryScreen extends React.Component {
 
   state = {
     expenses: this.props.expenses,
+    sections: [],
   }
 
   computeSections = () => {
-    const dates = uniq(this.props.expenses.map(expense => expense.date));
-    console.log(dates);
+    const dates = uniq(this.props.expenses.map(expense => expense.date)).sort();
+    const sectionObj = dates.reduce((acc, date) => {
+      acc[date] = { title: date, data: [] };
+      return acc;
+    }, {});
+    this.props.expenses.forEach((expense) => {
+      sectionObj[expense.date].data.push(expense);
+    });
+    this.setState({ sections: Object.values(sectionObj) });
+  }
+
+  onFocus = () => {
+    this.computeSections();
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={this.onFocus} />
         <SectionList
-          sections={[
-            { title: 'D', data: ['Devin'] },
-            { title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie'] },
-          ]}
-          renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+          sections={this.state.sections}
+          renderItem={({ item }) => <Text style={styles.item}>{item.pretty}</Text>}
           renderSectionHeader={({ section }) => (
             <Text style={styles.sectionHeader}>{section.title}</Text>
           )}
