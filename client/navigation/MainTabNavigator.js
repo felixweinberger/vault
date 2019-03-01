@@ -7,6 +7,13 @@ import SummaryScreen from '../screens/SummaryScreen';
 import AddExpenseAmountScreen from '../screens/AddExpenseAmountScreen';
 import AddExpenseDetailsScreen from '../screens/AddExpenseDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import Colors from '../constants/Colors';
+
+const tabNavigatorConfig = {
+  tabBarOptions: {
+    activeTintColor: Colors.tintColor,
+  },
+};
 
 const SummaryStack = createStackNavigator({
   Summary: SummaryScreen,
@@ -59,4 +66,4 @@ export default createBottomTabNavigator({
   SummaryStack,
   AddExpenseStack,
   SettingsStack,
-});
+}, tabNavigatorConfig);
