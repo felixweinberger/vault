@@ -20,7 +20,15 @@ const expenses = (state = [], action) => {
   }
 };
 
-const currentExpense = (state = {}, action) => {
+const currentExpense = (state = {
+  amount: 0,
+  pretty: '0.00',
+  currency: '€ EUR',
+  category: null,
+  tags: [],
+  timestamp: null,
+  date: null,
+}, action) => {
   switch (action.type) {
     case 'SUBMIT_NEW_AMOUNT': {
       const newState = {
@@ -35,8 +43,15 @@ const currentExpense = (state = {}, action) => {
       return 0;
     }
     case 'CANCEL_NEW_EXPENSE': {
-      // TODO
-      return 0;
+      return {
+        amount: 0,
+        pretty: '0.00',
+        currency: '€ EUR',
+        category: null,
+        tags: [],
+        timestamp: null,
+        date: null,
+      };
     }
     default: {
       return state;

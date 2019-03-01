@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import {
   ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput,
 } from 'react-native';
+import DatePicker from 'react-native-datepicker';
 
-import { submitNewExpense } from '../redux/actions';
+import { submitNewExpense, submitNewAmount, cancelNewExpense } from '../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -68,6 +69,37 @@ class AddExpenseDetailsScreen extends React.Component {
     title: 'Details',
   };
 
+  state = {
+    amount: this.props.currentExpense.amount,
+    pretty: this.props.currentExpense.pretty,
+    currency: this.props.currentExpense.currency,
+    category: null,
+    tags: [],
+    timestamp: null,
+    date: null,
+  };
+
+  componentDidMount() {
+    const timestamp = new Date().toISOString();
+    this.setState({
+      timestamp,
+      date: this.computeSimpleDate(timestamp),
+    });
+  }
+
+  computeSimpleDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const dd = date.getDate();
+    const mm = date.getMonth() + 1;
+    const yyyy = date.getFullYear();
+    return `${yyyy}.${mm}.${dd}`;
+  }
+
+  onCancel = () => {
+    this.props.cancelNewExpense();
+    this.props.navigation.navigate('AddAmount');
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -81,9 +113,7 @@ class AddExpenseDetailsScreen extends React.Component {
               <Text>Category</Text>
             </View>
             <View style={styles.option__value}>
-              <TextInput>
-                Select
-              </TextInput>
+              <TextInput placeholder='Required' />
             </View>
           </View>
           <View style={styles.option}>
@@ -91,23 +121,39 @@ class AddExpenseDetailsScreen extends React.Component {
               <Text>Tags</Text>
             </View>
             <View style={styles.option__value}>
-              <Text>Select</Text>
+              <TextInput placeholder='Optional' />
             </View>
           </View>
           <View style={styles.option}>
             <View style={styles.option__text}>
               <Text>Date</Text>
             </View>
-            <View style={styles.option__value}>
-              <Text>Select</Text>
-            </View>
+            <DatePicker
+              customStyles={{
+                dateInput: {
+                  borderWidth: 0,
+                },
+                dateText: {
+                  textAlign: 'right',
+                  alignSelf: 'stretch',
+                },
+              }}
+              date={this.state.date}
+              mode="date"
+              placeholder="select date"
+              showIcon={false}
+              format="YYYY-MM-DD"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              onDateChange={date => this.setState({ date })}
+            />
           </View>
           <View style={styles.option}>
             <View style={styles.option__text}>
               <Text>Comment</Text>
             </View>
             <View style={styles.option__value}>
-              <Text>Select</Text>
+              <TextInput placeholder='Optional' />
             </View>
           </View>
         </ScrollView>
@@ -115,7 +161,10 @@ class AddExpenseDetailsScreen extends React.Component {
           <TouchableOpacity style={styles.add} underlayColor="white">
             <Text>Add expense</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cancel} underlayColor="white">
+          <TouchableOpacity
+            style={styles.cancel}
+            underlayColor="white"
+            onPress={this.onCancel}>
             <Text>Cancel</Text>
           </TouchableOpacity>
         </View>
@@ -129,6 +178,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  submitNewAmount: expenseAmount => dispatch(submitNewAmount(expenseAmount)),
+  cancelNewExpense: () => dispatch(cancelNewExpense()),
   submitNewExpense: expense => dispatch(submitNewExpense(expense)),
 });
 

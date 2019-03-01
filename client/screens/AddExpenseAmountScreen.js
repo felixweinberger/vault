@@ -25,7 +25,18 @@ class AddExpenseAmountScreen extends React.Component {
     amount: 0,
     pretty: '0.00',
     currency: '€ EUR',
+    category: null,
+    tags: [],
+    timestamp: null,
+    date: null,
   };
+
+  componentDidMount() {
+    if (this.props.state !== undefined) {
+      this.setState(this.props.currentExpense);
+    }
+    console.log(this.state);
+  }
 
   updateState = (amount) => {
     const padded = amount.toString().padStart(3, '0');
