@@ -9,13 +9,13 @@ const emptyExpense = {
   timestamp: null,
   dateISO: null,
   date: null,
+  comment: null,
 };
 
 const expenses = (state = [], action) => {
   switch (action.type) {
     case 'ADD_EXPENSE': {
-      // TODO
-      return 0;
+      return [...state, action.expense];
     }
     case 'DELETE_EXPENSE': {
       // TODO
@@ -37,11 +37,7 @@ const currentExpense = (state = emptyExpense, action) => {
       const newState = action.expense;
       return newState;
     }
-    case 'SUBMIT_NEW_EXPENSE': {
-      // TODO
-      return 0;
-    }
-    case 'CANCEL_NEW_EXPENSE': {
+    case 'CLEAR_NEW_EXPENSE': {
       return emptyExpense;
     }
     default: {

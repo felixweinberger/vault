@@ -31,6 +31,7 @@ class AddExpenseAmountScreen extends React.Component {
     timestamp: null,
     dateISO: null,
     date: null,
+    comment: null,
   };
 
   updateState = (amount) => {

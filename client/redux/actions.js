@@ -23,11 +23,6 @@ export const submitNewAmount = expense => ({
   expense,
 });
 
-export const submitNewExpense = expense => ({
-  type: 'SUBMIT_NEW_EXPENSE',
-  expense,
-});
-
-export const cancelNewExpense = () => ({
-  type: 'CANCEL_NEW_EXPENSE',
+export const clearNewExpense = () => ({
+  type: 'CLEAR_NEW_EXPENSE',
 });

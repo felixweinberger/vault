@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput,
+  ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput, Alert,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
-import { submitNewExpense, submitNewAmount, cancelNewExpense } from '../redux/actions';
+import { addExpense, submitNewAmount, clearNewExpense } from '../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#004c8c',
+    backgroundColor: '#e64a19',
     fontWeight: 'bold',
   },
   amount__text: {
@@ -54,13 +54,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#321911',
   },
   cancel: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#5d4037',
+  },
+  action__text: {
+    color: 'white',
   },
 });
 
@@ -76,7 +79,9 @@ class AddExpenseDetailsScreen extends React.Component {
     category: null,
     tags: [],
     timestamp: null,
+    dateISO: null,
     date: null,
+    comment: null,
   };
 
   componentDidMount() {
@@ -95,8 +100,18 @@ class AddExpenseDetailsScreen extends React.Component {
     return `${yyyy}.${mm}.${dd}`;
   }
 
+  onAdd = () => {
+    if (this.state.category != null) {
+      this.props.addExpense(this.state);
+      this.props.clearNewExpense();
+      this.props.navigation.navigate('AddAmount');
+    } else {
+      Alert.alert('Please enter a category.');
+    }
+  }
+
   onCancel = () => {
-    this.props.cancelNewExpense();
+    this.props.clearNewExpense();
     this.props.navigation.navigate('AddAmount');
   }
 
@@ -113,17 +128,20 @@ class AddExpenseDetailsScreen extends React.Component {
               <Text>Category</Text>
             </View>
             <View style={styles.option__value}>
-              <TextInput placeholder='Required' />
+              <TextInput
+                placeholder='Required'
+                onChangeText={category => this.setState({ category })}
+              />
             </View>
           </View>
-          <View style={styles.option}>
+          {/* <View style={styles.option}>
             <View style={styles.option__text}>
               <Text>Tags</Text>
             </View>
             <View style={styles.option__value}>
               <TextInput placeholder='Optional' />
             </View>
-          </View>
+          </View> */}
           <View style={styles.option}>
             <View style={styles.option__text}>
               <Text>Date</Text>
@@ -158,14 +176,18 @@ class AddExpenseDetailsScreen extends React.Component {
           </View>
         </ScrollView>
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.add} underlayColor="white">
-            <Text>Add expense</Text>
+          <TouchableOpacity
+            style={styles.add}
+            underlayColor="white"
+            onPress={this.onAdd}>
+            <Text style={styles.action__text}>Add expense</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.cancel}
             underlayColor="white"
-            onPress={this.onCancel}>
-            <Text>Cancel</Text>
+            onPress={this.onCancel}
+          >
+            <Text style={styles.action__text}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -179,8 +201,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   submitNewAmount: expenseAmount => dispatch(submitNewAmount(expenseAmount)),
-  cancelNewExpense: () => dispatch(cancelNewExpense()),
-  submitNewExpense: expense => dispatch(submitNewExpense(expense)),
+  clearNewExpense: () => dispatch(clearNewExpense()),
+  addExpense: expense => dispatch(addExpense(expense)),
 });
 
 export default connect(
