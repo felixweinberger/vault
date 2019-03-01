@@ -21,7 +21,7 @@ class SummaryScreen extends React.Component {
 
   computeSections = () => {
     if (this.props.expenses.length > 0) {
-      const dates = uniq(this.props.expenses.map(expense => expense.date)).sort();
+      const dates = uniq(this.props.expenses.map(expense => expense.date)).sort((a, b) => (a - b));
       const sectionObj = dates.reduce((acc, date) => {
         acc[date] = { title: date, data: [] };
         return acc;

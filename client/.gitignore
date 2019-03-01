@@ -1,6 +1,9 @@
 # macOS specific files
 .DS_Store
 
+# mocks
+mocks
+
 # Logs
 logs
 *.log
