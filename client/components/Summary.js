@@ -54,13 +54,27 @@ export default function Summary(props) {
         onPress: () => props.onDelete(item.id),
       },
     ];
-    return (
-      <Swipeout right={swipeoutBtns}>
-        <View style={styles.item}>
+
+    let label;
+    if (item.comment) {
+      label = (
           <View>
             <Text style={styles.item__category}>{item.category}</Text>
             <Text style={styles.item__comment}>{item.comment}</Text>
           </View>
+      );
+    } else {
+      label = (
+          <View>
+            <Text style={styles.item__category}>{item.category}</Text>
+          </View>
+      );
+    }
+
+    return (
+      <Swipeout right={swipeoutBtns}>
+        <View style={styles.item}>
+          {label}
           <Text style={styles.item__amount}>{`${item.pretty} ${item.currency}`}</Text>
         </View>
       </Swipeout>
