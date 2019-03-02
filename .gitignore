@@ -3,7 +3,7 @@
 .vscode
 
 # Local only
-local
+dev
 
 # Logs
 logs
