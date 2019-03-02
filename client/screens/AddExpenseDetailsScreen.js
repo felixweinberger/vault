@@ -124,7 +124,9 @@ class AddExpenseDetailsScreen extends React.Component {
     const categoryBtns = categoryList
       .filter((cat) => {
         if (!this.state.category) return true;
-        return cat.indexOf(this.state.category.toLowerCase()) !== -1;
+        const lowerCat = cat.toLowerCase();
+        const lowerInput = this.state.category.toLowerCase();
+        return lowerCat.indexOf(lowerInput) !== -1;
       })
       .map(cat => (
         <TouchableOpacity
