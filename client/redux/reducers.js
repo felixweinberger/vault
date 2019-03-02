@@ -6,11 +6,13 @@ const emptyExpense = {
   amount: 0,
   pretty: '0.00',
   currency: '€ EUR',
+  inMainCurrency: null,
+  mainCurrency: null,
   category: null,
   tags: [],
+  comment: null,
   timestamp: null,
   date: null,
-  comment: null,
 };
 
 const expenses = (state = [], action) => {
