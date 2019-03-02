@@ -19,14 +19,14 @@ class SummaryScreen extends React.Component {
     title: 'Summary',
   };
 
-  computeSections = () => {
-    if (this.props.expenses.length > 0) {
-      const dates = uniq(this.props.expenses.map(expense => expense.date)).sort((a, b) => a < b);
+  computeByDate = (expenses) => {
+    if (expenses.length > 0) {
+      const dates = uniq(expenses.map(expense => expense.date)).sort((a, b) => a < b);
       const sectionObj = dates.reduce((acc, date) => {
         acc[date] = { title: date, data: [] };
         return acc;
       }, {});
-      this.props.expenses.forEach((expense) => {
+      expenses.forEach((expense) => {
         sectionObj[expense.date].data.push(expense);
       });
       return Object.values(sectionObj);
@@ -39,7 +39,7 @@ class SummaryScreen extends React.Component {
   }
 
   render() {
-    const sections = this.computeSections(this.props.expenses);
+    const sections = this.computeByDate(this.props.expenses);
     return (
       <View style={styles.container}>
         <Summary
@@ -53,6 +53,7 @@ class SummaryScreen extends React.Component {
 
 const mapStateToProps = state => ({
   expenses: state.expenses,
+  categories: state.categories,
 });
 
 const mapDispatchToProps = dispatch => ({
