@@ -34,12 +34,6 @@ const styles = StyleSheet.create({
   options: {
     flexGrow: 7,
   },
-  optionsContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginLeft: 20,
-    marginRight: 20,
-  },
   option: {
     flex: 1,
     flexDirection: 'row',
@@ -47,6 +41,31 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     alignItems: 'center',
+  },
+  category: {
+    flex: 3,
+    justifyContent: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  category__label: {
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  category__scrollview: {
+    flexGrow: 2,
+  },
+  category__list: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  category__listitem: {
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   actions: {
     flex: 2,
@@ -100,6 +119,27 @@ class AddExpenseDetailsScreen extends React.Component {
     return `${yyyy}.${mm}.${dd}`;
   }
 
+  computeCategories = (categories) => {
+    const categoryList = Object.keys(categories).sort((a, b) => categories[b] - categories[a]);
+    const categoryBtns = categoryList
+      .filter((cat) => {
+        if (!this.state.category) return true;
+        return cat.indexOf(this.state.category.toLowerCase()) !== -1;
+      })
+      .map(cat => (
+        <TouchableOpacity
+          key={cat}
+          style={styles.category__listitem}
+          onPress={() => this.setState({ category: cat })}
+        >
+          <Text>
+            {cat}
+          </Text>
+        </TouchableOpacity>
+      ));
+    return categoryBtns;
+  }
+
   onAdd = () => {
     if (this.state.category != null) {
       this.props.addExpense(this.state);
@@ -122,26 +162,26 @@ class AddExpenseDetailsScreen extends React.Component {
           <Text style={styles.amount__text}>New expense: </Text>
           <Text style={styles.amount__value}>{`${this.props.currentExpense.pretty} ${this.props.currentExpense.currency}`}</Text>
         </View>
-        <ScrollView style={styles.options} contentContainerStyle={styles.optionsContainer}>
-          <View style={styles.option}>
-            <View style={styles.option__text}>
-              <Text>Category</Text>
+        <View style={styles.options}>
+          <View style={styles.category}>
+            <View style={styles.category__label}>
+              <View style={styles.category__text}>
+                <Text>Category</Text>
+              </View>
+              <View style={styles.category__value}>
+                <TextInput
+                  placeholder='Required'
+                  value={this.state.category ? this.state.category : null}
+                  onChangeText={category => this.setState({ category })}
+                />
+              </View>
             </View>
-            <View style={styles.option__value}>
-              <TextInput
-                placeholder='Required'
-                onChangeText={category => this.setState({ category })}
-              />
-            </View>
+            <ScrollView
+              style={styles.category__scrollview}
+              contentContainerStyle={styles.category__list}>
+              {this.computeCategories(this.props.categories)}
+            </ScrollView>
           </View>
-          {/* <View style={styles.option}>
-            <View style={styles.option__text}>
-              <Text>Tags</Text>
-            </View>
-            <View style={styles.option__value}>
-              <TextInput placeholder='Optional' />
-            </View>
-          </View> */}
           <View style={styles.option}>
             <View style={styles.option__text}>
               <Text>Date</Text>
@@ -177,7 +217,7 @@ class AddExpenseDetailsScreen extends React.Component {
               />
             </View>
           </View>
-        </ScrollView>
+        </View>
         <View style={styles.actions}>
           <TouchableOpacity
             style={styles.add}
@@ -200,6 +240,7 @@ class AddExpenseDetailsScreen extends React.Component {
 
 const mapStateToProps = state => ({
   currentExpense: state.currentExpense,
+  categories: state.categories,
 });
 
 const mapDispatchToProps = dispatch => ({
