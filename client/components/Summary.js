@@ -10,13 +10,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  sectionHeader: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: 2,
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
-    fontWeight: 'bold',
     backgroundColor: Colors.orange6,
+  },
+  header__text: {
+    fontWeight: 'bold',
     color: 'white',
   },
   item: {
@@ -44,6 +48,13 @@ const styles = StyleSheet.create({
 });
 
 export default function Summary(props) {
+  const prettifyAmount = (amount) => {
+    const padded = amount.toString().padStart(3, '0');
+    const preComma = padded.slice(0, padded.length - 2);
+    const postComma = padded.slice(padded.length - 2);
+    return `${preComma}.${postComma}`;
+  };
+
   const renderItem = ({ item }) => {
     const swipeoutBtns = [
       // { text: 'Edit', backgroundColor: 'skyblue', color: 'white' },
@@ -81,9 +92,16 @@ export default function Summary(props) {
     );
   };
 
-  const renderHeader = ({ section }) => (
-    <Text style={styles.sectionHeader}>{section.title}</Text>
-  );
+  const renderHeader = ({ section }) => {
+    const sectionTotal = section.data.reduce((acc, el) => acc + el.amount, 0);
+
+    return (
+      <View style={styles.header}>
+        <Text style={styles.header__text}>{section.title}</Text>
+        <Text style={styles.header__text}>{prettifyAmount(sectionTotal)} € EUR</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
