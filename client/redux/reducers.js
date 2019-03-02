@@ -37,6 +37,26 @@ const expenses = (state = [], action) => {
   }
 };
 
+const categories = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_EXPENSE': {
+      const newState = { ...state };
+      newState[action.expense.category] = newState[action.expense.category]
+        ? newState[action.expense.category] + 1
+        : 1;
+      return newState;
+    }
+    case 'DELETE_EXPENSE': {
+      const newState = { ...state };
+      newState[action.expense.category] -= 1;
+      return newState;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const currentExpense = (state = emptyExpense, action) => {
   switch (action.type) {
     case 'SUBMIT_NEW_AMOUNT': {
@@ -65,8 +85,9 @@ const settings = (state = {}, action) => {
 };
 
 const reducers = combineReducers({
-  expenses,
   currentExpense,
+  expenses,
+  categories,
   settings,
 });
 
