@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput, Alert,
+  ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import DatePicker from 'react-native-datepicker';
@@ -161,7 +161,7 @@ class AddExpenseDetailsScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <NavigationEvents onWillFocus={this.onFocus} />
         <View style={styles.amount}>
           <Text style={styles.amount__text}>New expense: </Text>
@@ -232,7 +232,7 @@ class AddExpenseDetailsScreen extends React.Component {
             <Text style={styles.action__text}>Cancel</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
