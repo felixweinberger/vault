@@ -125,11 +125,8 @@ class AddExpenseDetailsScreen extends React.Component {
         return lowerCat.indexOf(lowerInput) !== -1;
       })
       .map(cat => (
-        <TouchableOpacity
-          key={cat}
-          style={styles.category__listitem}
-          onPress={() => this.setState({ category: cat })}
-        >
+        <TouchableOpacity key={cat} style={styles.category__listitem}
+          onPress={() => this.setState({ category: cat })}>
           <Text>
             {cat}
           </Text>
@@ -138,17 +135,16 @@ class AddExpenseDetailsScreen extends React.Component {
     return categoryBtns;
   }
 
-  onCategoryType = () => {
-    // TODO
-  }
-
-  onCategoryBtnPress = () => {
-    // TODO
-  }
-
   onAdd = () => {
     if (this.state.category != null) {
-      const newExpense = { expenses: {} };
+      const newExpense = {
+        expenses: {},
+        categories: {},
+      };
+      const propCat = this.props.state.entities.categories;
+      newExpense.categories[this.state.category] = propCat[this.state.category]
+        ? this.props.state.entities.categories[this.state.category] + 1
+        : 1;
       newExpense.expenses[this.state.id] = { ...this.state };
       this.props.updateEntities(newExpense);
       this.onCancel();
