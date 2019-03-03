@@ -7,8 +7,3 @@ export const deleteExpense = expenseId => ({
   type: 'DELETE_EXPENSE',
   expenseId,
 });
-
-export const modifySettings = settings => ({
-  type: 'MODIFY_SETTINGS',
-  settings,
-});

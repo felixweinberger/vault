@@ -96,46 +96,55 @@ class AddExpenseDetailsScreen extends React.Component {
   state = {
     amount: 0,
     currency: 'EUR',
+    date: null,
   };
 
-  // componentDidMount() {
-  //   const timestamp = new Date().toISOString();
-  //   this.setState({
-  //     timestamp,
-  //     date: this.computeSimpleDate(timestamp),
-  //   });
-  // }
+  onFocus = () => {
+    const timestamp = new Date().toISOString();
+    this.setState({
+      ...this.props.state.entities.current,
+      date: this.computeSimpleDate(timestamp),
+    });
+  }
 
-  // computeSimpleDate = (timestamp) => {
-  //   const date = new Date(timestamp);
-  //   const dd = date.getDate().toString().padStart(2, '0');
-  //   const mm = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const yyyy = date.getFullYear();
-  //   return `${yyyy}.${mm}.${dd}`;
-  // }
+  computeSimpleDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const dd = date.getDate().toString().padStart(2, '0');
+    const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+    const yyyy = date.getFullYear();
+    return `${yyyy}.${mm}.${dd}`;
+  }
 
-  // computeCategories = (categories) => {
-  //   const categoryList = Object.keys(categories).sort((a, b) => categories[b] - categories[a]);
-  //   const categoryBtns = categoryList
-  //     .filter((cat) => {
-  //       if (!this.state.category) return true;
-  //       const lowerCat = cat.toLowerCase();
-  //       const lowerInput = this.state.category.toLowerCase();
-  //       return lowerCat.indexOf(lowerInput) !== -1;
-  //     })
-  //     .map(cat => (
-  //       <TouchableOpacity
-  //         key={cat}
-  //         style={styles.category__listitem}
-  //         onPress={() => this.setState({ category: cat })}
-  //       >
-  //         <Text>
-  //           {cat}
-  //         </Text>
-  //       </TouchableOpacity>
-  //     ));
-  //   return categoryBtns;
-  // }
+  computeCategories = (categories) => {
+    const categoryList = Object.keys(categories).sort((a, b) => categories[b] - categories[a]);
+    const categoryBtns = categoryList
+      .filter((cat) => {
+        if (!this.state.category) return true;
+        const lowerCat = cat.toLowerCase();
+        const lowerInput = this.state.category.toLowerCase();
+        return lowerCat.indexOf(lowerInput) !== -1;
+      })
+      .map(cat => (
+        <TouchableOpacity
+          key={cat}
+          style={styles.category__listitem}
+          onPress={() => this.setState({ category: cat })}
+        >
+          <Text>
+            {cat}
+          </Text>
+        </TouchableOpacity>
+      ));
+    return categoryBtns;
+  }
+
+  onCategoryType = () => {
+    // TODO
+  }
+
+  onCategoryBtnPress = () => {
+    // TODO
+  }
 
   onAdd = () => {
     if (this.state.category != null) {
@@ -154,10 +163,6 @@ class AddExpenseDetailsScreen extends React.Component {
     this.props.navigation.navigate('AddAmount');
   }
 
-  onFocus = () => {
-    this.setState({ ...this.props.state.entities.current });
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -167,7 +172,7 @@ class AddExpenseDetailsScreen extends React.Component {
           <Text style={styles.amount__value}>
             {`${this.state.amount} ${this.state.currency}`}</Text>
         </View>
-        {/* <View style={styles.options}>
+        <View style={styles.options}>
           <View style={styles.category}>
             <View style={styles.category__label}>
               <View style={styles.category__text}>
@@ -184,7 +189,7 @@ class AddExpenseDetailsScreen extends React.Component {
             <ScrollView
               style={styles.category__scrollview}
               contentContainerStyle={styles.category__list}>
-              {this.computeCategories(this.props.categories)}
+              {this.computeCategories(this.props.state.entities.categories)}
             </ScrollView>
           </View>
           <View style={styles.option}>
@@ -222,7 +227,7 @@ class AddExpenseDetailsScreen extends React.Component {
               />
             </View>
           </View>
-        </View> */}
+        </View>
         <View style={styles.actions}>
           <TouchableOpacity style={styles.add} underlayColor="white" onPress={this.onAdd}>
             <Text style={styles.action__text}>Add expense</Text>
