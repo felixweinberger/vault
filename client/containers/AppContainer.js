@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Platform, StatusBar, StyleSheet, View,
 } from 'react-native';
@@ -7,6 +8,8 @@ import {
 } from 'expo';
 
 import AppNavigator from '../navigation/AppNavigator';
+import { updateEntities } from '../redux/actions';
+import fetchFxRates from '../lib/fx';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
@@ -38,8 +41,17 @@ export default class App extends React.Component {
     );
   }
 
+  updateFxRates = async () => {
+    const fxRates = await fetchFxRates();
+    Object.keys(fxRates).forEach((currency) => {
+      this.props.state.entities.currencies[currency].fxRatePerEuro = fxRates[currency];
+    });
+    this.props.updateEntities({ currencies: { ...this.props.state.entities.currencies } });
+  }
+
   loadResourcesAsync = async () => Promise.all([
     Font.loadAsync({ ...Icon.Ionicons.font }),
+    this.updateFxRates(),
   ]);
 
   handleLoadingError = (error) => {
@@ -50,3 +62,14 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
+
+const mapStateToProps = state => ({ state });
+
+const mapDispatchToProps = dispatch => ({
+  updateEntities: entities => dispatch(updateEntities(entities)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
