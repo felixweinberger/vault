@@ -21,7 +21,6 @@ const defaultEntities = {
 };
 
 const entities = (state = defaultEntities, action) => {
-  console.log(action);
   if (!action.entities) return state;
 
   return {

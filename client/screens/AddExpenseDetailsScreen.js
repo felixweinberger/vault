@@ -93,16 +93,10 @@ class AddExpenseDetailsScreen extends React.Component {
     title: 'Details',
   };
 
-  // state = {
-  //   amount: this.props.currentExpense.amount,
-  //   pretty: this.props.currentExpense.pretty,
-  //   currency: this.props.currentExpense.currency,
-  //   category: null,
-  //   tags: [],
-  //   timestamp: null,
-  //   date: null,
-  //   comment: null,
-  // };
+  state = {
+    amount: 0,
+    currency: 'EUR',
+  };
 
   // componentDidMount() {
   //   const timestamp = new Date().toISOString();
@@ -153,10 +147,10 @@ class AddExpenseDetailsScreen extends React.Component {
   //   }
   // }
 
-  // onCancel = () => {
-  //   this.props.clearNewExpense();
-  //   this.props.navigation.navigate('AddAmount');
-  // }
+  onCancel = () => {
+    this.props.clearNewExpense();
+    this.props.navigation.navigate('AddAmount');
+  }
 
   onFocus = () => {
     this.setState({ ...this.props.state.entities.current });
@@ -169,8 +163,7 @@ class AddExpenseDetailsScreen extends React.Component {
         <View style={styles.amount}>
           <Text style={styles.amount__text}>New expense: </Text>
           <Text style={styles.amount__value}>
-            {`${this.state.amount} ${this.state.currency}`}
-          </Text>
+            {`${this.state.amount} ${this.state.currency}`}</Text>
         </View>
         {/* <View style={styles.options}>
           <View style={styles.category}>
