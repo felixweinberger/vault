@@ -23,13 +23,17 @@ class SettingsScreen extends React.Component {
     title: 'Settings',
   };
 
+  onCurrencyPress = () => {
+    this.props.navigation.navigate('SelectCurrency');
+  };
+
   render() {
     return (
       <ScrollView style={styles.options} contentContainerStyle={styles.optionsContainer}>
         <View style={styles.option}>
-          <Text>Currency</Text>
-          <TouchableOpacity underlayColor="white">
-            <Text>Button</Text>
+          <Text>Home Currency</Text>
+          <TouchableOpacity underlayColor="white" onPress={this.onCurrencyPress}>
+            <Text>{this.props.state.entities.settings.mainCurrency}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>

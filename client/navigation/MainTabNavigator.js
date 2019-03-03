@@ -7,6 +7,7 @@ import SummaryScreen from '../screens/SummaryScreen';
 import AddExpenseAmountScreen from '../screens/AddExpenseAmountScreen';
 import AddExpenseDetailsScreen from '../screens/AddExpenseDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import SelectCurrencyScreen from '../screens/SelectCurrencyScreen';
 import Colors from '../constants/Colors';
 
 const tabNavigatorConfig = {
@@ -50,6 +51,7 @@ AddExpenseStack.navigationOptions = {
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
+  SelectCurrency: SelectCurrencyScreen,
 });
 
 SettingsStack.navigationOptions = {
