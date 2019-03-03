@@ -4,7 +4,7 @@ import {
   ScrollView, StyleSheet, View, Text, TouchableOpacity, Switch,
 } from 'react-native';
 
-import { modifySettings } from '../redux/actions';
+import { updateEntities } from '../redux/actions';
 
 const styles = StyleSheet.create({
   option: {
@@ -53,12 +53,10 @@ class SettingsScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  currentExpense: state.settings,
-});
+const mapStateToProps = state => ({ state });
 
 const mapDispatchToProps = dispatch => ({
-  modifySettings: settings => dispatch(modifySettings(settings)),
+  updateEntities: entities => dispatch(updateEntities(entities)),
 });
 
 export default connect(

@@ -48,16 +48,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Summary(props) {
-  const prettifyAmount = (amount) => {
-    const padded = amount.toString().padStart(3, '0');
-    const preComma = padded.slice(0, padded.length - 2);
-    const postComma = padded.slice(padded.length - 2);
-    return `${preComma}.${postComma}`;
-  };
-
   const renderItem = ({ item }) => {
     const swipeoutBtns = [
-      // { text: 'Edit', backgroundColor: 'skyblue', color: 'white' },
       {
         text: 'Delete',
         backgroundColor: Colors.redDark,
@@ -86,19 +78,19 @@ export default function Summary(props) {
       <Swipeout right={swipeoutBtns}>
         <View style={styles.item}>
           {label}
-          <Text style={styles.item__amount}>{`${item.pretty} ${item.currency}`}</Text>
+          <Text style={styles.item__amount}>{`${item.amount} ${item.currency}`}</Text>
         </View>
       </Swipeout>
     );
   };
 
   const renderHeader = ({ section }) => {
-    const sectionTotal = section.data.reduce((acc, el) => acc + el.amount, 0);
+    const sectionTotal = section.data.reduce((acc, el) => (acc * 100 + el.amount * 100) / 100, 0);
 
     return (
       <View style={styles.header}>
         <Text style={styles.header__text}>{section.title}</Text>
-        <Text style={styles.header__text}>{prettifyAmount(sectionTotal)} € EUR</Text>
+        <Text style={styles.header__text}>{sectionTotal} EUR</Text>
       </View>
     );
   };

@@ -21,8 +21,17 @@ const defaultEntities = {
 };
 
 const entities = (state = defaultEntities, action) => {
-  if (!action.entities) return state;
+  if (action.type === 'DELETE_EXPENSE') {
+    const newExpenses = { ...state.expenses };
+    delete newExpenses[action.expenseId];
 
+    return {
+      ...state,
+      expenses: { ...newExpenses },
+    };
+  }
+
+  if (!action.entities) return state;
   return {
     ...state,
     current: { ...state.current, ...action.entities.current },
