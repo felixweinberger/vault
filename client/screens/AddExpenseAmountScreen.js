@@ -4,10 +4,11 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationEvents } from 'react-navigation';
+import uuidv4 from 'uuid/v4';
 
 import Numpad from '../components/Numpad';
 import AddAmount from '../components/AddAmount';
-import { submitNewAmount } from '../redux/actions';
+import { updateEntities } from '../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,36 +24,42 @@ class AddExpenseAmountScreen extends React.Component {
   };
 
   state = {
-    amount: 0,
+    cents: 0,
     pretty: '0.00',
-    currency: '€ EUR',
-    category: null,
-    tags: [],
-    timestamp: null,
-    date: null,
-    comment: null,
   };
 
-  updateState = (amount) => {
-    const padded = amount.toString().padStart(3, '0');
+  updateLocalState = (cents) => {
+    const padded = cents.toString().padStart(3, '0');
     const preComma = padded.slice(0, padded.length - 2);
     const postComma = padded.slice(padded.length - 2);
     const pretty = `${preComma}.${postComma}`;
-    this.setState({ amount, pretty });
+    this.setState({
+      cents,
+      pretty,
+      amount: cents / 100,
+      inMainCurrency: cents / 100,
+    });
   }
 
-  onFocus = () => this.setState({ ...this.props.currentExpense });
+  onFocus = () => {
+    this.updateLocalState(this.props.state.entities.current.amount * 100);
+    this.setState({ ...this.props.state.entities.current });
+  }
 
   onNumpadPress = (value) => {
     if (typeof value === 'number') {
-      const amount = Number(this.state.amount.toString() + value.toString());
-      this.updateState(amount);
+      const cents = Number(this.state.cents.toString() + value.toString());
+      this.updateLocalState(cents);
     } else if (value === '⇤') {
-      const amountString = this.state.amount.toString();
-      const amount = Number(amountString.slice(0, amountString.length - 1));
-      this.updateState(amount);
+      const centString = this.state.cents.toString();
+      const cents = Number(centString.slice(0, centString.length - 1));
+      this.updateLocalState(cents);
     } else if (value === '↩︎') {
-      this.props.submitNewAmount(this.state);
+      const currentUpdate = { current: { ...this.state } };
+      currentUpdate.current.id = uuidv4();
+      delete currentUpdate.current.cents;
+      delete currentUpdate.current.pretty;
+      this.props.updateEntities(currentUpdate);
       this.props.navigation.navigate('AddDetails');
     }
   }
@@ -68,12 +75,10 @@ class AddExpenseAmountScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  currentExpense: state.currentExpense,
-});
+const mapStateToProps = state => ({ state });
 
 const mapDispatchToProps = dispatch => ({
-  submitNewAmount: expense => dispatch(submitNewAmount(expense)),
+  updateEntities: entities => dispatch(updateEntities(entities)),
 });
 
 export default connect(

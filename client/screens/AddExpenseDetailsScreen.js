@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import {
   ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput, Alert,
 } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import DatePicker from 'react-native-datepicker';
 
-import { addExpense, submitNewAmount, clearNewExpense } from '../redux/actions';
+import { updateEntities } from '../redux/actions';
 import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
@@ -92,79 +93,86 @@ class AddExpenseDetailsScreen extends React.Component {
     title: 'Details',
   };
 
-  state = {
-    amount: this.props.currentExpense.amount,
-    pretty: this.props.currentExpense.pretty,
-    currency: this.props.currentExpense.currency,
-    category: null,
-    tags: [],
-    timestamp: null,
-    date: null,
-    comment: null,
-  };
+  // state = {
+  //   amount: this.props.currentExpense.amount,
+  //   pretty: this.props.currentExpense.pretty,
+  //   currency: this.props.currentExpense.currency,
+  //   category: null,
+  //   tags: [],
+  //   timestamp: null,
+  //   date: null,
+  //   comment: null,
+  // };
 
-  componentDidMount() {
-    const timestamp = new Date().toISOString();
-    this.setState({
-      timestamp,
-      date: this.computeSimpleDate(timestamp),
-    });
-  }
+  // componentDidMount() {
+  //   const timestamp = new Date().toISOString();
+  //   this.setState({
+  //     timestamp,
+  //     date: this.computeSimpleDate(timestamp),
+  //   });
+  // }
 
-  computeSimpleDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const dd = date.getDate().toString().padStart(2, '0');
-    const mm = (date.getMonth() + 1).toString().padStart(2, '0');
-    const yyyy = date.getFullYear();
-    return `${yyyy}.${mm}.${dd}`;
-  }
+  // computeSimpleDate = (timestamp) => {
+  //   const date = new Date(timestamp);
+  //   const dd = date.getDate().toString().padStart(2, '0');
+  //   const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   const yyyy = date.getFullYear();
+  //   return `${yyyy}.${mm}.${dd}`;
+  // }
 
-  computeCategories = (categories) => {
-    const categoryList = Object.keys(categories).sort((a, b) => categories[b] - categories[a]);
-    const categoryBtns = categoryList
-      .filter((cat) => {
-        if (!this.state.category) return true;
-        const lowerCat = cat.toLowerCase();
-        const lowerInput = this.state.category.toLowerCase();
-        return lowerCat.indexOf(lowerInput) !== -1;
-      })
-      .map(cat => (
-        <TouchableOpacity
-          key={cat}
-          style={styles.category__listitem}
-          onPress={() => this.setState({ category: cat })}
-        >
-          <Text>
-            {cat}
-          </Text>
-        </TouchableOpacity>
-      ));
-    return categoryBtns;
-  }
+  // computeCategories = (categories) => {
+  //   const categoryList = Object.keys(categories).sort((a, b) => categories[b] - categories[a]);
+  //   const categoryBtns = categoryList
+  //     .filter((cat) => {
+  //       if (!this.state.category) return true;
+  //       const lowerCat = cat.toLowerCase();
+  //       const lowerInput = this.state.category.toLowerCase();
+  //       return lowerCat.indexOf(lowerInput) !== -1;
+  //     })
+  //     .map(cat => (
+  //       <TouchableOpacity
+  //         key={cat}
+  //         style={styles.category__listitem}
+  //         onPress={() => this.setState({ category: cat })}
+  //       >
+  //         <Text>
+  //           {cat}
+  //         </Text>
+  //       </TouchableOpacity>
+  //     ));
+  //   return categoryBtns;
+  // }
 
-  onAdd = () => {
-    if (this.state.category != null) {
-      this.props.addExpense(this.state);
-      this.props.clearNewExpense();
-      this.props.navigation.navigate('AddAmount');
-    } else {
-      Alert.alert('Please enter a category.');
-    }
-  }
+  // onAdd = () => {
+  //   if (this.state.category != null) {
+  //     this.props.addExpense(this.state);
+  //     this.props.clearNewExpense();
+  //     this.props.navigation.navigate('AddAmount');
+  //   } else {
+  //     Alert.alert('Please enter a category.');
+  //   }
+  // }
 
-  onCancel = () => {
-    this.props.clearNewExpense();
-    this.props.navigation.navigate('AddAmount');
+  // onCancel = () => {
+  //   this.props.clearNewExpense();
+  //   this.props.navigation.navigate('AddAmount');
+  // }
+
+  onFocus = () => {
+    this.setState({ ...this.props.state.entities.current });
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={this.onFocus} />
         <View style={styles.amount}>
           <Text style={styles.amount__text}>New expense: </Text>
-          <Text style={styles.amount__value}>{`${this.props.currentExpense.pretty} ${this.props.currentExpense.currency}`}</Text>
+          <Text style={styles.amount__value}>
+            {`${this.state.amount} ${this.state.currency}`}
+          </Text>
         </View>
-        <View style={styles.options}>
+        {/* <View style={styles.options}>
           <View style={styles.category}>
             <View style={styles.category__label}>
               <View style={styles.category__text}>
@@ -219,19 +227,12 @@ class AddExpenseDetailsScreen extends React.Component {
               />
             </View>
           </View>
-        </View>
+        </View> */}
         <View style={styles.actions}>
-          <TouchableOpacity
-            style={styles.add}
-            underlayColor="white"
-            onPress={this.onAdd}>
+          <TouchableOpacity style={styles.add} underlayColor="white" onPress={this.onAdd}>
             <Text style={styles.action__text}>Add expense</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.cancel}
-            underlayColor="white"
-            onPress={this.onCancel}
-          >
+          <TouchableOpacity style={styles.cancel} underlayColor="white" onPress={this.onCancel}>
             <Text style={styles.action__text}>Cancel</Text>
           </TouchableOpacity>
         </View>
@@ -240,15 +241,10 @@ class AddExpenseDetailsScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  currentExpense: state.currentExpense,
-  categories: state.categories,
-});
+const mapStateToProps = state => ({ state });
 
 const mapDispatchToProps = dispatch => ({
-  submitNewAmount: expenseAmount => dispatch(submitNewAmount(expenseAmount)),
-  clearNewExpense: () => dispatch(clearNewExpense()),
-  addExpense: expense => dispatch(addExpense(expense)),
+  updateEntities: entities => dispatch(updateEntities(entities)),
 });
 
 export default connect(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  StyleSheet, View,
+  StyleSheet, View, Text,
 } from 'react-native';
 import { uniq } from 'lodash';
 
@@ -19,41 +19,41 @@ class SummaryScreen extends React.Component {
     title: 'Summary',
   };
 
-  computeByDate = (expenses) => {
-    if (expenses.length > 0) {
-      const dates = uniq(expenses.map(expense => expense.date)).sort((a, b) => a < b);
-      const sectionObj = dates.reduce((acc, date) => {
-        acc[date] = { title: date, data: [] };
-        return acc;
-      }, {});
-      expenses.forEach((expense) => {
-        sectionObj[expense.date].data.push(expense);
-      });
-      return Object.values(sectionObj);
-    }
-    return [];
-  }
+  // computeByDate = (expenses) => {
+  //   if (expenses.length > 0) {
+  //     const dates = uniq(expenses.map(expense => expense.date)).sort((a, b) => a < b);
+  //     const sectionObj = dates.reduce((acc, date) => {
+  //       acc[date] = { title: date, data: [] };
+  //       return acc;
+  //     }, {});
+  //     expenses.forEach((expense) => {
+  //       sectionObj[expense.date].data.push(expense);
+  //     });
+  //     return Object.values(sectionObj);
+  //   }
+  //   return [];
+  // }
 
-  onDelete = (expenseId) => {
-    this.props.deleteExpense(expenseId);
-  }
+  // onDelete = (expenseId) => {
+  //   this.props.deleteExpense(expenseId);
+  // }
 
   render() {
-    const sections = this.computeByDate(this.props.expenses);
+    // const sections = this.computeByDate(this.props.expenses);
     return (
       <View style={styles.container}>
-        <Summary
+        {/* <Summary
           sections={sections}
           onDelete={this.onDelete}
-        />
+        /> */}
+        <Text>Test</Text>
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  expenses: state.expenses,
-  categories: state.categories,
+  state,
 });
 
 const mapDispatchToProps = dispatch => ({
