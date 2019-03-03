@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import AppContainer from './containers/AppContainer';
 import configureStore from './redux/store';
 
-// Clear async storage
+// Clear async storage for dev
 // const clearAsyncStorage = async () => {
 //   AsyncStorage.clear();
 // };

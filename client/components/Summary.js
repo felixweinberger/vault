@@ -87,13 +87,13 @@ export default function History(props) {
     if (props.list === 'history') {
       amount = (
         <View>
-          <Text style={styles.item__amount}>{`${item.amount} ${item.currency}`}</Text>
+          <Text style={styles.item__amount}>{`${item.amount.toFixed(2)} ${item.currency}`}</Text>
         </View>
       );
     } else if (props.list === 'categories') {
       amount = (
         <View>
-          <Text style={styles.item__amount}>{`${item.amount} ${item.currency}`}</Text>
+          <Text style={styles.item__amount}>{`${item.amount.toFixed(2)} ${item.currency}`}</Text>
           <Text style={styles.item__date}>{`${item.date}`}</Text>
         </View>
       );
