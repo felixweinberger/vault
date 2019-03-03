@@ -166,7 +166,7 @@ class AddExpenseDetailsScreen extends React.Component {
         <View style={styles.amount}>
           <Text style={styles.amount__text}>New expense: </Text>
           <Text style={styles.amount__value}>
-            {`${this.state.amount} ${this.state.currency}`}</Text>
+            {`${this.state.amount.toFixed(2)} ${this.state.currency}`}</Text>
         </View>
         <View style={styles.options}>
           <View style={styles.category}>

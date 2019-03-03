@@ -42,12 +42,21 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   item__amount: {
+    textAlign: 'right',
+    fontWeight: 'bold',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  item__date: {
+    textAlign: 'right',
+    fontStyle: 'italic',
+    color: 'grey',
     paddingLeft: 10,
     paddingRight: 10,
   },
 });
 
-export default function Summary(props) {
+export default function History(props) {
   const renderItem = ({ item }) => {
     const swipeoutBtns = [
       {
@@ -61,16 +70,32 @@ export default function Summary(props) {
     let label;
     if (item.comment) {
       label = (
-          <View>
-            <Text style={styles.item__category}>{item.category}</Text>
-            <Text style={styles.item__comment}>{item.comment}</Text>
-          </View>
+        <View>
+          <Text style={styles.item__category}>{item.category}</Text>
+          <Text style={styles.item__comment}>{item.comment}</Text>
+        </View>
       );
     } else {
       label = (
-          <View>
-            <Text style={styles.item__category}>{item.category}</Text>
-          </View>
+        <View>
+          <Text style={styles.item__category}>{item.category}</Text>
+        </View>
+      );
+    }
+
+    let amount;
+    if (props.list === 'history') {
+      amount = (
+        <View>
+          <Text style={styles.item__amount}>{`${item.amount} ${item.currency}`}</Text>
+        </View>
+      );
+    } else if (props.list === 'categories') {
+      amount = (
+        <View>
+          <Text style={styles.item__amount}>{`${item.amount} ${item.currency}`}</Text>
+          <Text style={styles.item__date}>{`${item.date}`}</Text>
+        </View>
       );
     }
 
@@ -78,19 +103,20 @@ export default function Summary(props) {
       <Swipeout right={swipeoutBtns}>
         <View style={styles.item}>
           {label}
-          <Text style={styles.item__amount}>{`${item.amount} ${item.currency}`}</Text>
+          {amount}
         </View>
       </Swipeout>
     );
   };
 
   const renderHeader = ({ section }) => {
-    const sectionTotal = section.data.reduce((acc, el) => (acc * 100 + el.amount * 100) / 100, 0);
+    const sectionTotal = section.data
+      .reduce((acc, el) => (acc * 100 + el.inMainCurrency * 100) / 100, 0);
 
     return (
       <View style={styles.header}>
         <Text style={styles.header__text}>{section.title}</Text>
-        <Text style={styles.header__text}>{sectionTotal} EUR</Text>
+        <Text style={styles.header__text}>{sectionTotal.toFixed(2)} EUR</Text>
       </View>
     );
   };
