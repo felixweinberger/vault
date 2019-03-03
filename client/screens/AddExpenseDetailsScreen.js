@@ -137,18 +137,20 @@ class AddExpenseDetailsScreen extends React.Component {
   //   return categoryBtns;
   // }
 
-  // onAdd = () => {
-  //   if (this.state.category != null) {
-  //     this.props.addExpense(this.state);
-  //     this.props.clearNewExpense();
-  //     this.props.navigation.navigate('AddAmount');
-  //   } else {
-  //     Alert.alert('Please enter a category.');
-  //   }
-  // }
+  onAdd = () => {
+    if (this.state.category != null) {
+      const newExpense = { expenses: {} };
+      newExpense.expenses[this.state.id] = { ...this.state };
+      this.props.updateEntities(newExpense);
+      this.onCancel();
+    } else {
+      Alert.alert('Please enter a category.');
+    }
+  }
 
   onCancel = () => {
-    this.props.clearNewExpense();
+    const clearCurrent = { current: { amount: 0, inMainCurrency: 0 } };
+    this.props.updateEntities(clearCurrent);
     this.props.navigation.navigate('AddAmount');
   }
 
