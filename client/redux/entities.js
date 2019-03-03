@@ -1,23 +1,12 @@
-const defaultExpense = {
-  id: null,
-  amount: 0,
-  currency: 'EUR',
-  inMainCurrency: 0,
-  mainCurrency: 'EUR',
-  category: null,
-  tags: [],
-  comment: null,
-  date: null,
-};
+import { defaultExpense, defaultCurrencies, defaultSettings } from './defaults';
 
 const defaultEntities = {
-  current: Object.assign(defaultExpense),
+  current: { ...defaultExpense },
   expenses: {},
-  currencies: {},
   categories: {},
   tags: {},
-  settings: {},
-  fxrates: {},
+  settings: { ...defaultSettings },
+  currencies: { ...defaultCurrencies },
 };
 
 const entities = (state = defaultEntities, action) => {
@@ -40,7 +29,6 @@ const entities = (state = defaultEntities, action) => {
     categories: { ...state.categories, ...action.entities.categories },
     tags: { ...state.tags, ...action.entities.tags },
     settings: { ...state.settings, ...action.entities.settings },
-    fxrates: { ...state.fxrates, ...action.entities.fxrates },
   };
 };
 
