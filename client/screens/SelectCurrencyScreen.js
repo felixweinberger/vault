@@ -55,7 +55,7 @@ class SelectCurrencyScreen extends React.Component {
       // settings: { mainCurrency: currency },
       current: { currency },
     });
-    this.props.navigation.navigate('Settings');
+    this.props.navigation.goBack();
   }
 
   renderCurrency = ({ item }) => {
@@ -69,7 +69,10 @@ class SelectCurrencyScreen extends React.Component {
         </View>
         <View style={styles.currency__right}>
           <Text style={styles.currency__rt}>{item.symbol}</Text>
-          <Text style={styles.currency__rb}>{fxRatePerMainCurrency.toPrecision(5)}</Text>
+          <Text style={styles.currency__rb}>
+            1{this.state.currencies[this.state.mainCurrency].symbol}{' = '}
+            {fxRatePerMainCurrency.toPrecision(5)}{this.state.currencies[item.id].symbol}
+          </Text>
         </View>
       </TouchableOpacity>
     );

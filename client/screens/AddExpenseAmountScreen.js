@@ -76,12 +76,20 @@ class AddExpenseAmountScreen extends React.Component {
     }
   }
 
+  onCurrencyPress = () => {
+    this.props.navigation.navigate('SelectCurrency');
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <NavigationEvents onWillFocus={this.onFocus} />
         <AddAmount
-          value={this.state.pretty} currency={this.state.current.currency} />
+          value={this.state.pretty}
+          currency={this.state.current.currency}
+          symbol={this.state.currencies[this.state.current.currency].symbol}
+          onCurrencyPress={this.onCurrencyPress}
+        />
         <Numpad onNumpadPress={this.onNumpadPress} />
       </View>
     );

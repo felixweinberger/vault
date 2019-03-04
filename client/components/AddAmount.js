@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, Text, Platform,
+  View, StyleSheet, Text, Platform, TouchableOpacity,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -16,7 +16,10 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : 'monospace',
   },
   amount__currency: {
-    fontSize: 25,
+    fontSize: 20,
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 10,
   },
 });
 
@@ -26,9 +29,9 @@ export default function AddAmount(props) {
       <Text style={styles.amount__value}>
         {props.value}
       </Text>
-      <Text style={styles.amount__currency}>
-        {props.currency}
-      </Text>
+      <TouchableOpacity onPress={props.onCurrencyPress}>
+        <Text style={styles.amount__currency}>{props.currency} ({props.symbol})</Text>
+      </TouchableOpacity>
     </View>
   );
 }

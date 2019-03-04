@@ -85,7 +85,7 @@ export const defaultCurrencies = {
   CHF: {
     id: 'CHF',
     name: 'Swiss franc',
-    symbol: 'CHF',
+    symbol: 'SFr.',
     fxRatePerEuro: 1,
   },
   ISK: {

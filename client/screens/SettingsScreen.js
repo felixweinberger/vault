@@ -23,6 +23,11 @@ class SettingsScreen extends React.Component {
     title: 'Settings',
   };
 
+  state = {
+    ...this.props.state.entities.settings,
+    currencies: this.props.state.entities.currencies,
+  }
+
   onCurrencyPress = () => {
     this.props.navigation.navigate('SelectCurrency');
   };
@@ -33,7 +38,9 @@ class SettingsScreen extends React.Component {
         <View style={styles.option}>
           <Text>Home Currency</Text>
           <TouchableOpacity underlayColor="white" onPress={this.onCurrencyPress}>
-            <Text>{this.props.state.entities.settings.mainCurrency}</Text>
+            <Text>
+              {this.state.mainCurrency} ({this.state.currencies[this.state.mainCurrency].symbol})
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>

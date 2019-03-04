@@ -33,6 +33,7 @@ SummaryStack.navigationOptions = {
 const AddExpenseStack = createStackNavigator({
   AddAmount: AddExpenseAmountScreen,
   AddDetails: AddExpenseDetailsScreen,
+  SelectCurrency: SelectCurrencyScreen,
 });
 
 AddExpenseStack.navigationOptions = {
