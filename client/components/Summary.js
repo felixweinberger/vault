@@ -87,14 +87,16 @@ export default function Summary(props) {
     if (props.list === 'history') {
       amount = (
         <View>
-          <Text style={styles.item__amount}>{`${item.amount.toFixed(2)} ${item.currency}`}</Text>
+          <Text style={styles.item__amount}>
+            {`${item.amount.toFixed(2)} ${item.currency} (${props.currencies[item.currency].symbol})`}
+          </Text>
         </View>
       );
     } else if (props.list === 'categories') {
       amount = (
         <View>
           <Text style={styles.item__amount}>
-            {`${item.amount.toFixed(2)} ${item.currency}`}
+            {`${item.amount.toFixed(2)} ${item.currency} (${props.currencies[item.currency].symbol})`}
           </Text>
           <Text style={styles.item__date}>{`${item.date}`}</Text>
         </View>
@@ -118,7 +120,7 @@ export default function Summary(props) {
     return (
       <View style={styles.header}>
         <Text style={styles.header__text}>{section.title}</Text>
-        <Text style={styles.header__text}>{sectionTotal.toFixed(2)} {props.mainCurrency}</Text>
+        <Text style={styles.header__text}>{`${sectionTotal.toFixed(2)} ${props.mainCurrency} (${props.currencies[props.mainCurrency].symbol})`}</Text>
       </View>
     );
   };

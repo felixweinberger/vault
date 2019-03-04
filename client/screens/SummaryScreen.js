@@ -197,7 +197,7 @@ class SummaryScreen extends React.Component {
         <View style={styles.headerTotal}>
           <Text style={styles.headerTotal__text}>Total: </Text>
           <Text style={styles.headerTotal__total}>
-            {this.computeTotal(sections).toFixed(2)} {this.state.currency}
+            {`${this.computeTotal(sections).toFixed(2)} ${this.state.currency} (${this.props.state.entities.currencies[this.state.currency].symbol})`}
           </Text>
         </View>
       );
@@ -212,6 +212,7 @@ class SummaryScreen extends React.Component {
           onDelete={this.onDelete}
           list={this.state.list}
           mainCurrency={this.state.currency}
+          currencies={this.props.state.entities.currencies}
         />
         <View style={styles.filterDate}>
           <Text style={styles.filterBtn__label}>From: </Text>
