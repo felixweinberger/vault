@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function History(props) {
+export default function Summary(props) {
   const renderItem = ({ item }) => {
     const swipeoutBtns = [
       {
@@ -93,7 +93,9 @@ export default function History(props) {
     } else if (props.list === 'categories') {
       amount = (
         <View>
-          <Text style={styles.item__amount}>{`${item.amount.toFixed(2)} ${item.currency}`}</Text>
+          <Text style={styles.item__amount}>
+            {`${item.amount.toFixed(2)} ${item.currency}`}
+          </Text>
           <Text style={styles.item__date}>{`${item.date}`}</Text>
         </View>
       );

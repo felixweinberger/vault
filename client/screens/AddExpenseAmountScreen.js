@@ -26,24 +26,36 @@ class AddExpenseAmountScreen extends React.Component {
   state = {
     cents: 0,
     pretty: '0.00',
+    current: this.props.state.entities.current,
+    currencies: this.props.state.entities.currencies,
   };
+
+  convertCentsToMainCurrency = (cents) => {
+    const mainPerEuro = this.state.currencies[this.state.current.mainCurrency].fxRatePerEuro;
+    const currentPerEuro = this.state.currencies[this.state.current.currency].fxRatePerEuro;
+    return cents * (mainPerEuro / currentPerEuro);
+  }
 
   updateLocalState = (cents) => {
     const padded = cents.toString().padStart(3, '0');
     const preComma = padded.slice(0, padded.length - 2);
     const postComma = padded.slice(padded.length - 2);
     const pretty = `${preComma}.${postComma}`;
+    this.convertCentsToMainCurrency(cents);
     this.setState({
       cents,
       pretty,
-      amount: cents / 100,
-      inMainCurrency: cents / 100,
+      current: {
+        ...this.state.current,
+        amount: cents / 100,
+        inMainCurrency: this.convertCentsToMainCurrency(cents) / 100,
+      },
     });
   }
 
   onFocus = () => {
     this.updateLocalState(this.props.state.entities.current.amount * 100);
-    this.setState({ ...this.props.state.entities.current });
+    this.setState({ current: { ...this.props.state.entities.current } });
   }
 
   onNumpadPress = (value) => {
@@ -55,7 +67,7 @@ class AddExpenseAmountScreen extends React.Component {
       const cents = Number(centString.slice(0, centString.length - 1));
       this.updateLocalState(cents);
     } else if (value === '↩︎') {
-      const currentUpdate = { current: { ...this.state } };
+      const currentUpdate = { current: { ...this.state.current } };
       currentUpdate.current.id = uuidv4();
       delete currentUpdate.current.cents;
       delete currentUpdate.current.pretty;
@@ -68,8 +80,9 @@ class AddExpenseAmountScreen extends React.Component {
     return (
       <View style={styles.container}>
         <NavigationEvents onWillFocus={this.onFocus} />
-        <AddAmount value={this.state.pretty} currency={this.state.currency} />
-        <Numpad onNumpadPress={this.onNumpadPress}/>
+        <AddAmount
+          value={this.state.pretty} currency={this.state.current.currency} />
+        <Numpad onNumpadPress={this.onNumpadPress} />
       </View>
     );
   }

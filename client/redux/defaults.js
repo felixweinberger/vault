@@ -16,6 +16,12 @@ export const defaultSettings = {
 };
 
 export const defaultCurrencies = {
+  EUR: {
+    id: 'EUR',
+    name: 'European euro',
+    symbol: '€',
+    fxRatePerEuro: 1,
+  },
   USD: {
     id: 'USD',
     name: 'US dollar',

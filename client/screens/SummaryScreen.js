@@ -196,7 +196,7 @@ class SummaryScreen extends React.Component {
         <View style={styles.headerTotal}>
           <Text style={styles.headerTotal__text}>Total: </Text>
           <Text style={styles.headerTotal__total}>
-            {this.computeTotal(sections)} {this.state.currency}
+            {this.computeTotal(sections).toFixed(2)} {this.state.currency}
           </Text>
         </View>
       );
