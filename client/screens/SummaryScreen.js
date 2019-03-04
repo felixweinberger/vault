@@ -153,7 +153,8 @@ class SummaryScreen extends React.Component {
     const timestamp = new Date().toISOString();
     const toDate = this.computeSimpleDate(timestamp);
     const fromDate = `${toDate.substring(0, toDate.length - 2)}01`;
-    this.setState({ fromDate, toDate });
+    const { mainCurrency } = this.props.state.entities.settings;
+    this.setState({ fromDate, toDate, currency: mainCurrency });
   }
 
   onDelete = (expenseId) => {
@@ -206,7 +207,12 @@ class SummaryScreen extends React.Component {
       <View style={styles.container}>
         <NavigationEvents onWillFocus={this.onFocus} />
           {header(sections)}
-        <Summary sections={sections} onDelete={this.onDelete} list={this.state.list} />
+        <Summary
+          sections={sections}
+          onDelete={this.onDelete}
+          list={this.state.list}
+          mainCurrency={this.state.currency}
+        />
         <View style={styles.filterDate}>
           <Text style={styles.filterBtn__label}>From: </Text>
           <DatePicker

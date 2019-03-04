@@ -14,6 +14,14 @@ const tabNavigatorConfig = {
   tabBarOptions: {
     activeTintColor: Colors.tintColor,
   },
+  topBar: {
+    leftButtonColor: Colors.orange6,
+    rightButtonColor: Colors.orange6,
+    backButton: {
+      color: Colors.orange6,
+    },
+    tintColor: Colors.tintColor,
+  },
 };
 
 const SummaryStack = createStackNavigator({

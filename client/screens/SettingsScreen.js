@@ -23,24 +23,19 @@ class SettingsScreen extends React.Component {
     title: 'Settings',
   };
 
-  state = {
-    ...this.props.state.entities.settings,
-    currencies: this.props.state.entities.currencies,
-  }
-
   onCurrencyPress = () => {
-    this.props.navigation.navigate('SelectCurrency');
+    this.props.navigation.navigate('SelectCurrency', { isGlobalChange: true });
   };
 
   render() {
+    const { mainCurrency } = this.props.state.entities.settings;
+    const mainCurrencySymbol = this.props.state.entities.currencies[mainCurrency].symbol;
     return (
       <ScrollView style={styles.options} contentContainerStyle={styles.optionsContainer}>
         <View style={styles.option}>
           <Text>Home Currency</Text>
           <TouchableOpacity underlayColor="white" onPress={this.onCurrencyPress}>
-            <Text>
-              {this.state.mainCurrency} ({this.state.currencies[this.state.mainCurrency].symbol})
-            </Text>
+            <Text>{mainCurrency} ({mainCurrencySymbol})</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>

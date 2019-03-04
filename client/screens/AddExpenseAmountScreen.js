@@ -77,7 +77,7 @@ class AddExpenseAmountScreen extends React.Component {
   }
 
   onCurrencyPress = () => {
-    this.props.navigation.navigate('SelectCurrency');
+    this.props.navigation.navigate('SelectCurrency', { isGlobalChange: false });
   }
 
   render() {

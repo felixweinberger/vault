@@ -118,7 +118,7 @@ export default function Summary(props) {
     return (
       <View style={styles.header}>
         <Text style={styles.header__text}>{section.title}</Text>
-        <Text style={styles.header__text}>{sectionTotal.toFixed(2)} EUR</Text>
+        <Text style={styles.header__text}>{sectionTotal.toFixed(2)} {props.mainCurrency}</Text>
       </View>
     );
   };
