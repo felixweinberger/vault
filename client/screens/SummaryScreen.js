@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import { uniq } from 'lodash';
 
 import Colors from '../constants/Colors';
@@ -12,6 +13,15 @@ import Summary from '../components/Summary';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  noExpenses: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noExpenses__text: {
+    color: 'grey',
+    fontStyle: 'italic',
   },
   filterBtns: {
     backgroundColor: Colors.greyDark,
@@ -41,10 +51,25 @@ class SummaryScreen extends React.Component {
 
   state = {
     list: 'categories',
+    fromDate: null,
+    toDate: null,
+    total: 0,
+    currency: this.props.state.entities.settings.mainCurrency,
+  }
+
+  computeSimpleDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const dd = date.getDate().toString().padStart(2, '0');
+    const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+    const yyyy = date.getFullYear();
+    return `${yyyy}.${mm}.${dd}`;
   }
 
   computeSectionsByDate = () => {
-    const expenseArr = Object.values(this.props.state.entities.expenses);
+    const expenseArr = Object.values(this.props.state.entities.expenses)
+      .filter(expense => (expense.date >= this.state.fromDate
+        && expense.date <= this.state.toDate));
+
     if (expenseArr.length > 0) {
       const dates = uniq(expenseArr.map(expense => expense.date)).sort((a, b) => a < b);
       const sectionObj = dates.reduce((acc, date) => {
@@ -53,6 +78,7 @@ class SummaryScreen extends React.Component {
       }, {});
       expenseArr.forEach((expense) => {
         sectionObj[expense.date].data.push(expense);
+        this.setState({ total: this.state.total + expense.inMainCurrency });
       });
       return Object.values(sectionObj);
     }
@@ -60,7 +86,10 @@ class SummaryScreen extends React.Component {
   }
 
   computeSectionsByCategory = () => {
-    const expenseArr = Object.values(this.props.state.entities.expenses);
+    const expenseArr = Object.values(this.props.state.entities.expenses)
+      .filter(expense => (expense.date >= this.state.fromDate
+        && expense.date <= this.state.toDate));
+
     if (expenseArr.length > 0) {
       const categoryTotals = expenseArr
         .reduce((acc, el) => {
@@ -80,10 +109,17 @@ class SummaryScreen extends React.Component {
 
       expenseArr.forEach((expense) => {
         sectionObj[expense.category].data.push(expense);
+        this.setState({ total: this.state.total + expense.inMainCurrency });
       });
       return Object.values(sectionObj);
     }
     return [];
+  }
+
+  onFocus = () => {
+    const toDate = this.computeSimpleDate(new Date().toISOString());
+    const fromDate = `${toDate.substring(0, toDate.length - 2)}01`;
+    this.setState({ fromDate, toDate });
   }
 
   onDelete = (expenseId) => {
@@ -108,14 +144,20 @@ class SummaryScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={this.onFocus} />
+        <View style={styles.noExpenses}>
+          <Text style ={styles.noExpenses__text}>
+            {sections.length === 0 ? 'There are no expenses for this period' : null}
+          </Text>
+        </View>
         <Summary sections={sections} onDelete={this.onDelete} list={this.state.list} />
         <View style={styles.filterBtns}>
           <Text style={styles.filterBtn__label}>Filter dates:</Text>
           <TouchableOpacity style={styles.filterBtn} underlayColor="white" onPress={this.onPressHistory}>
-            <Text style={styles.filterBtn__text}>From: DATE</Text>
+            <Text style={styles.filterBtn__text}>From: {this.state.fromDate}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.filterBtn} underlayColor="white" onPress={this.onPressHistory}>
-            <Text style={styles.filterBtn__text}>To: DATE</Text>
+            <Text style={styles.filterBtn__text}>To: {this.state.toDate}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.filterBtns}>
