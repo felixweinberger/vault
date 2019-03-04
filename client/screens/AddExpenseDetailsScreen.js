@@ -61,12 +61,11 @@ const styles = StyleSheet.create({
   category__list: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
   },
   category__listitem: {
     paddingTop: 10,
     paddingBottom: 10,
+    paddingRight: 10,
   },
   actions: {
     flex: 2,
@@ -125,9 +124,9 @@ class AddExpenseDetailsScreen extends React.Component {
         return lowerCat.indexOf(lowerInput) !== -1;
       })
       .map(cat => (
-        <TouchableOpacity key={cat} style={styles.category__listitem}
+        <TouchableOpacity key={cat}
           onPress={() => this.setState({ category: cat })}>
-          <Text>
+          <Text style={styles.category__listitem}>
             {cat}
           </Text>
         </TouchableOpacity>
