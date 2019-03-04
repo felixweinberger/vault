@@ -4,9 +4,9 @@ import {
   ScrollView, StyleSheet, View, Text, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
-import DatePicker from 'react-native-datepicker';
 
 import { updateEntities } from '../redux/actions';
+import DatePicker from '../components/DatePicker';
 import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
@@ -159,6 +159,10 @@ class AddExpenseDetailsScreen extends React.Component {
     this.props.navigation.navigate('AddAmount');
   }
 
+  onDateChange = (date) => {
+    this.setState({ date });
+  }
+
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -192,25 +196,7 @@ class AddExpenseDetailsScreen extends React.Component {
             <View style={styles.option__text}>
               <Text>Date</Text>
             </View>
-            <DatePicker
-              customStyles={{
-                dateInput: {
-                  borderWidth: 0,
-                },
-                dateText: {
-                  textAlign: 'right',
-                  alignSelf: 'stretch',
-                },
-              }}
-              date={this.state.date}
-              mode="date"
-              placeholder="select date"
-              showIcon={false}
-              format="YYYY.MM.DD"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              onDateChange={date => this.setState({ date })}
-            />
+            <DatePicker date={this.state.date} onDateChange={this.onDateChange} />
           </View>
           <View style={styles.option}>
             <View style={styles.option__text}>
