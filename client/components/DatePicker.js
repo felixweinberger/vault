@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 export default function AddExpenseDetailsScreen(props) {
@@ -7,24 +8,28 @@ export default function AddExpenseDetailsScreen(props) {
   };
 
   return (
-    <DatePicker
-      customStyles={{
-        dateInput: {
-          borderWidth: 0,
-        },
-        dateText: {
-          textAlign: 'right',
-          alignSelf: 'stretch',
-        },
-      }}
-      date={props.date}
-      mode="date"
-      placeholder="select date"
-      showIcon={false}
-      format="YYYY.MM.DD"
-      confirmBtnText="Confirm"
-      cancelBtnText="Cancel"
-      onDateChange={onDateChange}
-    />
+    <View>
+      <DatePicker
+        customStyles={{
+          dateInput: {
+            borderWidth: 0,
+          },
+          dateText: {
+            textAlign: 'center',
+            alignSelf: 'stretch',
+            color: props.fontColor,
+          },
+        }}
+        style={{ width: 80 }}
+        date={props.date}
+        mode="date"
+        placeholder="select date"
+        showIcon={false}
+        format="YYYY.MM.DD"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        onDateChange={onDateChange}
+      />
+    </View>
   );
 }

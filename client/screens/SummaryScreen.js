@@ -9,6 +9,7 @@ import { uniq } from 'lodash';
 import Colors from '../constants/Colors';
 import { deleteExpense } from '../redux/actions';
 import Summary from '../components/Summary';
+import DatePicker from '../components/DatePicker';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,15 +38,21 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-  filterBtns: {
+  filterDate: {
     backgroundColor: Colors.greyDark,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     height: 50,
     paddingLeft: 10,
     paddingRight: 10,
   },
-  filterBtn: {
+  filterGroups: {
+    backgroundColor: Colors.greyDark,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50,
+    paddingLeft: 10,
     paddingRight: 10,
   },
   filterBtn__label: {
@@ -55,6 +62,7 @@ const styles = StyleSheet.create({
   },
   filterBtn__text: {
     color: 'white',
+    paddingRight: 10,
   },
 });
 
@@ -160,6 +168,14 @@ class SummaryScreen extends React.Component {
     this.setState({ list: 'categories' });
   }
 
+  onFromDateChange = (date) => {
+    this.setState({ fromDate: date });
+  }
+
+  onToDateChange = (date) => {
+    this.setState({ toDate: date });
+  }
+
   render() {
     let sections;
     if (this.state.list === 'history') {
@@ -191,16 +207,21 @@ class SummaryScreen extends React.Component {
         <NavigationEvents onWillFocus={this.onFocus} />
           {header(sections)}
         <Summary sections={sections} onDelete={this.onDelete} list={this.state.list} />
-        <View style={styles.filterBtns}>
-          <Text style={styles.filterBtn__label}>Filter dates:</Text>
-          <TouchableOpacity style={styles.filterBtn} underlayColor="white" onPress={this.onPressHistory}>
-            <Text style={styles.filterBtn__text}>From: {this.state.fromDate}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.filterBtn} underlayColor="white" onPress={this.onPressHistory}>
-            <Text style={styles.filterBtn__text}>To: {this.state.toDate}</Text>
-          </TouchableOpacity>
+        <View style={styles.filterDate}>
+          <Text style={styles.filterBtn__label}>From: </Text>
+          <DatePicker
+            date={this.state.fromDate}
+            onDateChange={this.onFromDateChange}
+            fontColor={'white'}
+          />
+          <Text style={styles.filterBtn__label}>To: </Text>
+          <DatePicker
+            date={this.state.toDate}
+            onDateChange={this.onToDateChange}
+            fontColor={'white'}
+          />
         </View>
-        <View style={styles.filterBtns}>
+        <View style={styles.filterGroups}>
           <Text style={styles.filterBtn__label}>Group by:</Text>
           <TouchableOpacity style={styles.filterBtn} underlayColor="white" onPress={this.onPressHistory}>
             <Text style={styles.filterBtn__text}>Date</Text>
