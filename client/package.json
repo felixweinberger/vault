@@ -46,6 +46,7 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^5.10.0",
+    "shitty-qs": "^1.0.1",
     "uuid": "^3.3.2"
   },
   "private": true

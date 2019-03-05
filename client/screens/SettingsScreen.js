@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 
 import { updateEntities } from '../redux/actions';
+import { authorize } from '../lib/dropbox/DropboxAuthenticate';
 
 const styles = StyleSheet.create({
   option: {
@@ -27,6 +28,10 @@ class SettingsScreen extends React.Component {
     this.props.navigation.navigate('SelectCurrency', { isGlobalChange: true });
   };
 
+  onDrobpoxPress = () => {
+    authorize();
+  }
+
   render() {
     const { mainCurrency } = this.props.state.entities.settings;
     const mainCurrencySymbol = this.props.state.entities.currencies[mainCurrency].symbol;
@@ -43,15 +48,9 @@ class SettingsScreen extends React.Component {
           <Switch />
         </View>
         <View style={styles.option}>
-          <Text>Import .csv</Text>
-          <TouchableOpacity underlayColor="white">
-            <Text>Button</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.option}>
-          <Text>Export .csv</Text>
-          <TouchableOpacity underlayColor="white">
-            <Text>Button</Text>
+          <Text>Dropbox Backup</Text>
+          <TouchableOpacity underlayColor="white" onPress={this.onDrobpoxPress}>
+            <Text>Enable</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
