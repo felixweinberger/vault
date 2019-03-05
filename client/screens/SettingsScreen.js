@@ -34,8 +34,6 @@ class SettingsScreen extends React.Component {
     redirectData: null,
   }
 
-  backupIsCurrentlyInProgress = false;
-
   onCurrencyPress = () => {
     this.props.navigation.navigate('SelectCurrency', { isGlobalChange: true });
   };
@@ -100,45 +98,12 @@ class SettingsScreen extends React.Component {
 
   onUploadPress = async () => {
     const { accessToken } = this.props.state.entities.settings.dropboxAuth;
-
     if (accessToken === null) {
       throw new Error('Cannot perform backup without an access token');
     }
 
-    // If a backup is already in progress, this will currently be a no-op
-    if (this.backupIsCurrentlyInProgress === true) {
-      throw new Error('[Dropbox backup] backup already in progress!');
-    }
-
-    console.log('[Dropbox backup] begin!');
-    this.backupIsCurrentlyInProgress = true;
-
-    // store the current redux
-    const backupEntities = JSON.stringify(this.props.state.entities);
-
-    // Kick off the remote backup to Dropbox.
-    this.performBackup(backupEntities, accessToken).then(() => {
-      this.backupIsCurrentlyInProgress = false;
-      console.log('[Dropbox backup] BACKUP COMPLETE.');
-    }).catch((reason) => {
-      // Could not backup!
-      console.log('[Dropbox backup] Failed prepping for backup!', reason);
-      this.backupIsCurrentlyInProgress = false;
-    });
-  }
-
-  performBackup = async (backupEntities, accessToken) => {
-    if (accessToken === null) {
-      throw new Error('Cannot perform backup without an access token');
-    }
-
-    console.log('We have an access token! Entities to be backed up:', backupEntities);
-
-    return this.uploadToDropbox(backupEntities, accessToken);
-  }
-
-  uploadToDropbox = async (backupEntities, accessToken) => {
     const dbx = new Dropbox({ accessToken, fetch });
+    const backupEntities = JSON.stringify(this.props.state.entities);
     dbx.filesUpload({ path: '/backup.json', contents: backupEntities })
       .then((response) => {
         console.log(response);
