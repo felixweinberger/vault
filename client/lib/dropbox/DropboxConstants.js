@@ -4,7 +4,7 @@
  */
 
 export const OAUTH_CONFIG = {
-  OAUTH_REDIRECT_URI: 'com.felixweinberger.vaultapp.oauth://oauthredirect',
+  OAUTH_REDIRECT_URI: 'exp://127.0.0.1:19000',
   OAUTH_CLIENT_ID: 'furmsyiaaatou4o',
 };
 

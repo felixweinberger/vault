@@ -1,16 +1,16 @@
 import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from 'react-native';
 
 import AppContainer from './containers/AppContainer';
 import configureStore from './redux/store';
 
 // Clear async storage for dev
-const clearAsyncStorage = async () => {
-  AsyncStorage.clear();
-};
-clearAsyncStorage();
+// const clearAsyncStorage = async () => {
+//   AsyncStorage.clear();
+// };
+// clearAsyncStorage();
 
 const { store, persistor } = configureStore();
 

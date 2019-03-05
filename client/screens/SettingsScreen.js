@@ -1,11 +1,16 @@
+/* eslint-disable no-console */
+
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView, StyleSheet, View, Text, TouchableOpacity, Switch,
+  ScrollView, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
+import { Linking, WebBrowser } from 'expo';
 
 import { updateEntities } from '../redux/actions';
-import { authorize } from '../lib/dropbox/DropboxAuthenticate';
+import { OAUTH_CONFIG, DROPBOX } from '../lib/dropbox/DropboxConstants';
+// import { authorize } from '../lib/dropbox/DropboxAuthenticate';
+
 
 const styles = StyleSheet.create({
   option: {
@@ -24,12 +29,56 @@ class SettingsScreen extends React.Component {
     title: 'Settings',
   };
 
+  state = {
+    redirectData: null,
+  }
+
   onCurrencyPress = () => {
     this.props.navigation.navigate('SelectCurrency', { isGlobalChange: true });
   };
 
-  onDrobpoxPress = () => {
-    authorize();
+  handleRedirect = (event) => {
+    WebBrowser.dismissBrowser();
+    const data = Linking.parse(event.url);
+    this.setState({ redirectData: data });
+    console.log(data);
+  };
+
+  onDropboxPress = async () => {
+    try {
+      this.addLinkingListener();
+      console.log(JSON.stringify(Linking.makeUrl()));
+      const stateValue = Math.random().toString();
+      const result = await WebBrowser.openBrowserAsync(
+        [
+          DROPBOX.AUTHORIZE_URL,
+          '?response_type=token',
+          `&client_id=${OAUTH_CONFIG.OAUTH_CLIENT_ID}`,
+          `&redirect_uri=${OAUTH_CONFIG.OAUTH_REDIRECT_URI}`,
+          `&state=${stateValue}`,
+        ].join(''),
+      );
+      // console.log(result);
+      this.setState({ result });
+      this.removeLinkingListener();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  addLinkingListener = () => {
+    Linking.addEventListener('url', this.handleRedirect);
+  };
+
+  removeLinkingListener = () => {
+    Linking.removeEventListener('url', this.handleRedirect);
+  };
+
+  maybeRenderRedirectData = () => {
+    if (this.state.redirectData) {
+      return <Text>{JSON.stringify(this.state.redirectData)}</Text>;
+    }
+    return null;
   }
 
   render() {
@@ -44,15 +93,12 @@ class SettingsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>FaceID / TouchID</Text>
-          <Switch />
-        </View>
-        <View style={styles.option}>
           <Text>Dropbox Backup</Text>
-          <TouchableOpacity underlayColor="white" onPress={this.onDrobpoxPress}>
+          <TouchableOpacity underlayColor="white" onPress={this.onDropboxPress}>
             <Text>Enable</Text>
           </TouchableOpacity>
         </View>
+        {this.maybeRenderRedirectData()}
       </ScrollView>
     );
   }
