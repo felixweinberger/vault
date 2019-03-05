@@ -92,10 +92,6 @@ class SettingsScreen extends React.Component {
     }
   };
 
-  onDownloadPress = async () => {
-    // todo
-  }
-
   onUploadPress = async () => {
     const { accessToken } = this.props.state.entities.settings.dropboxAuth;
     if (accessToken === null) {
@@ -103,14 +99,27 @@ class SettingsScreen extends React.Component {
     }
 
     const dbx = new Dropbox({ accessToken, fetch });
-    const backupEntities = JSON.stringify(this.props.state.entities);
-    dbx.filesUpload({ path: '/backup.json', contents: backupEntities })
+    const backupEntities = JSON.stringify(this.props.state.entities.expenses);
+    dbx.filesUpload({ path: '/backup.json', contents: backupEntities, mode: 'overwrite' })
       .then((response) => {
         console.log(response);
       })
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  onDownloadPress = async () => {
+    const { accessToken } = this.props.state.entities.settings.dropboxAuth;
+    if (accessToken === null) {
+      throw new Error('Cannot perform backup without an access token');
+    }
+
+    const dbx = new Dropbox({ accessToken, fetch });
+    const response = await dbx.filesDownload({ path: '/backup.json' });
+    const text = await (new Response(response.fileBlob)).text(); // eslint-disable-line no-undef
+    const expenses = JSON.parse(text);
+    this.props.updateEntities({ expenses });
   }
 
   addLinkingListener = () => {
