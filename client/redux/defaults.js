@@ -13,6 +13,7 @@ export const defaultExpense = {
 export const defaultSettings = {
   mainCurrency: 'EUR',
   faceID: false,
+  dropboxAuth: {},
 };
 
 export const defaultCurrencies = {

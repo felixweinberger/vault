@@ -6,6 +6,7 @@ import {
   ScrollView, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import { Linking, WebBrowser } from 'expo';
+import shittyQs from 'shitty-qs';
 
 import { updateEntities } from '../redux/actions';
 import { OAUTH_CONFIG, DROPBOX } from '../lib/dropbox/DropboxConstants';
@@ -39,23 +40,48 @@ class SettingsScreen extends React.Component {
 
   handleRedirect = (event) => {
     WebBrowser.dismissBrowser();
-    const data = Linking.parse(event.url);
-    this.setState({ redirectData: data });
-    console.log(data);
+    console.log('Deep link event!', event);
+
+    const queryStringResult = event.url.match(/#(.*)/);
+    if (queryStringResult === null || queryStringResult.length < 2) {
+      return Promise.reject(
+        new Error('Did not receive a query string as part of this deep link!'),
+      );
+    }
+
+    const [, queryString] = queryStringResult;
+    const parsedQueryString = shittyQs(queryString);
+    if (parsedQueryString.error) {
+      // There was an error!
+      const errorCode = parsedQueryString.error;
+      const errorDescription = parsedQueryString.error_description;
+
+      console.error('Dropbox OAuth error! code:', errorCode);
+      console.error('Error description:', errorDescription);
+
+      return Promise.reject(
+        new Error(`Could not authorize with Dropbox. Code: ${errorCode}`),
+      );
+    }
+
+    // Otherwise: not an error!
+    const accessToken = parsedQueryString.access_token;
+    const accountId = parsedQueryString.account_id;
+
+    // Persist accessToken and accountId
+    return this.props.updateEntities({ settings: { dropboxAuth: { accessToken, accountId } } });
   };
 
   onDropboxPress = async () => {
     try {
       this.addLinkingListener();
       console.log(JSON.stringify(Linking.makeUrl()));
-      const stateValue = Math.random().toString();
       const result = await WebBrowser.openBrowserAsync(
         [
           DROPBOX.AUTHORIZE_URL,
           '?response_type=token',
           `&client_id=${OAUTH_CONFIG.OAUTH_CLIENT_ID}`,
           `&redirect_uri=${OAUTH_CONFIG.OAUTH_REDIRECT_URI}`,
-          `&state=${stateValue}`,
         ].join(''),
       );
       // console.log(result);
@@ -88,13 +114,13 @@ class SettingsScreen extends React.Component {
       <ScrollView style={styles.options} contentContainerStyle={styles.optionsContainer}>
         <View style={styles.option}>
           <Text>Home Currency</Text>
-          <TouchableOpacity underlayColor="white" onPress={this.onCurrencyPress}>
+          <TouchableOpacity underlayColor='white' onPress={this.onCurrencyPress}>
             <Text>{mainCurrency} ({mainCurrencySymbol})</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
           <Text>Dropbox Backup</Text>
-          <TouchableOpacity underlayColor="white" onPress={this.onDropboxPress}>
+          <TouchableOpacity underlayColor='white' onPress={this.onDropboxPress}>
             <Text>Enable</Text>
           </TouchableOpacity>
         </View>
