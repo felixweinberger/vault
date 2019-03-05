@@ -127,7 +127,12 @@ class SettingsScreen extends React.Component {
     const response = await dbx.filesDownload({ path: '/backup.json' });
     const text = await (new Response(response.fileBlob)).text(); // eslint-disable-line no-undef
     const expenses = JSON.parse(text);
-    this.props.updateEntities({ expenses });
+    const oldCategories = this.props.state.entities.categories;
+    const categories = Object.values(expenses).reduce((acc, el) => {
+      acc[el.category] = acc[el.category] ? acc[el.category] + 1 : 1;
+      return acc;
+    }, oldCategories);
+    this.props.updateEntities({ expenses, categories });
   }
 
   render() {

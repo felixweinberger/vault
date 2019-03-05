@@ -146,6 +146,7 @@ class AddExpenseDetailsScreen extends React.Component {
         ? this.props.state.entities.categories[this.state.category] + 1
         : 1;
       newExpense.expenses[this.state.id] = { ...this.state };
+      delete newExpense.expenses[this.state.id].currencies;
       this.props.updateEntities(newExpense);
       this.onCancel();
     } else {
