@@ -1,7 +1,6 @@
 {
   "expo": {
-    "name": "Expenses",
-    "slug": "client",
+    "name": "Vault",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
