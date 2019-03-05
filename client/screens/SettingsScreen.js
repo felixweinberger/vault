@@ -72,6 +72,14 @@ class SettingsScreen extends React.Component {
     return this.props.updateEntities({ settings: { dropboxAuth: { accessToken, accountId } } });
   };
 
+  addLinkingListener = () => {
+    Linking.addEventListener('url', this.handleRedirect);
+  };
+
+  removeLinkingListener = () => {
+    Linking.removeEventListener('url', this.handleRedirect);
+  };
+
   onDropboxLinkPress = async () => {
     try {
       this.addLinkingListener();
@@ -122,21 +130,6 @@ class SettingsScreen extends React.Component {
     this.props.updateEntities({ expenses });
   }
 
-  addLinkingListener = () => {
-    Linking.addEventListener('url', this.handleRedirect);
-  };
-
-  removeLinkingListener = () => {
-    Linking.removeEventListener('url', this.handleRedirect);
-  };
-
-  maybeRenderRedirectData = () => {
-    if (this.state.redirectData) {
-      return <Text>{JSON.stringify(this.state.redirectData)}</Text>;
-    }
-    return null;
-  }
-
   render() {
     const { mainCurrency } = this.props.state.entities.settings;
     const mainCurrencySymbol = this.props.state.entities.currencies[mainCurrency].symbol;
@@ -166,7 +159,6 @@ class SettingsScreen extends React.Component {
             <Text>Download</Text>
           </TouchableOpacity>
         </View>
-        {this.maybeRenderRedirectData()}
       </ScrollView>
     );
   }
