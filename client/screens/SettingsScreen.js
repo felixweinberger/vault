@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import {
   ScrollView, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
-import { Linking, WebBrowser } from 'expo';
+import { Linking, WebBrowser, Icon } from 'expo';
 import shittyQs from 'shitty-qs';
-import fetch from 'isomorphic-fetch';
 import { Dropbox } from 'dropbox';
 
 import { updateEntities } from '../redux/actions';
@@ -16,12 +15,24 @@ import { OAUTH_CONFIG, DROPBOX } from '../lib/dropbox/DropboxConstants';
 const styles = StyleSheet.create({
   option: {
     flex: 1,
-    height: 80,
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginLeft: 20,
     marginRight: 20,
-    alignItems: 'center',
+  },
+  sectionHeader: {
+    flex: 1,
+    justifyContent: 'center',
+    height: 80,
+  },
+  sectionHeader__text: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
   },
 });
 
@@ -106,7 +117,7 @@ class SettingsScreen extends React.Component {
       throw new Error('Cannot perform backup without an access token');
     }
 
-    const dbx = new Dropbox({ accessToken, fetch });
+    const dbx = new Dropbox({ accessToken, fetch }); // eslint-disable-line no-undef
     const backupEntities = JSON.stringify(this.props.state.entities.expenses);
     dbx.filesUpload({ path: '/backup.json', contents: backupEntities, mode: 'overwrite' })
       .then((response) => {
@@ -123,7 +134,7 @@ class SettingsScreen extends React.Component {
       throw new Error('Cannot perform backup without an access token');
     }
 
-    const dbx = new Dropbox({ accessToken, fetch });
+    const dbx = new Dropbox({ accessToken, fetch }); // eslint-disable-line no-undef
     const response = await dbx.filesDownload({ path: '/backup.json' });
     const text = await (new Response(response.fileBlob)).text(); // eslint-disable-line no-undef
     const expenses = JSON.parse(text);
@@ -140,26 +151,36 @@ class SettingsScreen extends React.Component {
     const mainCurrencySymbol = this.props.state.entities.currencies[mainCurrency].symbol;
     return (
       <ScrollView style={styles.options} contentContainerStyle={styles.optionsContainer}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionHeader__text}>
+            Currency settings  💸
+          </Text>
+        </View>
         <View style={styles.option}>
           <Text>Home Currency</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onCurrencyPress}>
             <Text>{mainCurrency} ({mainCurrencySymbol})</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionHeader__text}>
+            Dropbox Integration <Icon.Ionicons name={'logo-dropbox'} size={30} />
+          </Text>
+        </View>
         <View style={styles.option}>
-          <Text>Dropbox Link</Text>
+          <Text>Authorize</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onDropboxLinkPress}>
-            <Text>Link</Text>
+            <Text>Link Dropbox</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Dropbox Upload</Text>
+          <Text>Export .json</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onUploadPress}>
             <Text>Upload</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Dropbox Download</Text>
+          <Text>Import .json</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onDownloadPress}>
             <Text>Download</Text>
           </TouchableOpacity>
