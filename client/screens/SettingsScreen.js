@@ -196,9 +196,9 @@ class SettingsScreen extends React.Component {
           </View>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Authorize</Text>
+          <Text style={styles.option__text}>Link Dropbox</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onDropboxLinkPress}>
-            <Text style={styles.option__text}>Link Dropbox</Text>
+            <Text style={styles.option__text}>Authorize</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
