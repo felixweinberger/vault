@@ -11,8 +11,12 @@ import { Dropbox } from 'dropbox';
 
 import { updateEntities } from '../redux/actions';
 import { OAUTH_CONFIG, DROPBOX } from '../lib/dropbox/DropboxConstants';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
+  options: {
+    backgroundColor: Colors.greyLight,
+  },
   option: {
     flex: 1,
     height: 60,
@@ -24,13 +28,27 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     flex: 1,
-    justifyContent: 'center',
-    height: 80,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 40,
+    backgroundColor: Colors.orange6,
   },
   sectionHeader__text: {
     fontWeight: 'bold',
-    fontSize: 20,
-    marginTop: 20,
+    color: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 16,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  sectionHeader__icon: {
+    fontWeight: 'bold',
+    color: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 25,
     marginLeft: 20,
     marginRight: 20,
   },
@@ -152,9 +170,14 @@ class SettingsScreen extends React.Component {
     return (
       <ScrollView style={styles.options} contentContainerStyle={styles.optionsContainer}>
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionHeader__text}>
-            Currency settings  💸
-          </Text>
+          <View style={styles.sectionHeader__left}>
+            <Text style={styles.sectionHeader__text}>
+              Currency settings
+            </Text>
+          </View>
+          <View style={styles.sectionHeader__right}>
+            <Icon.Ionicons name={'ios-cash'} style={styles.sectionHeader__icon}/>
+          </View>
         </View>
         <View style={styles.option}>
           <Text>Home Currency</Text>
@@ -163,26 +186,31 @@ class SettingsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionHeader__text}>
-            Dropbox Integration <Icon.Ionicons name={'logo-dropbox'} size={30} />
-          </Text>
+          <View style={styles.sectionHeader__left}>
+            <Text style={styles.sectionHeader__text}>
+              Dropbox integration
+            </Text>
+          </View>
+          <View style={styles.sectionHeader__right}>
+            <Icon.Ionicons name={'logo-dropbox'} style={styles.sectionHeader__icon}/>
+          </View>
         </View>
         <View style={styles.option}>
-          <Text>Authorize</Text>
+          <Text style={styles.option__text}>Authorize</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onDropboxLinkPress}>
-            <Text>Link Dropbox</Text>
+            <Text style={styles.option__text}>Link Dropbox</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Export .json</Text>
+          <Text style={styles.option__text}>Export .json</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onUploadPress}>
-            <Text>Upload</Text>
+            <Text style={styles.option__text}>Upload</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Import .json</Text>
+          <Text style={styles.option__text}>Import .json</Text>
           <TouchableOpacity underlayColor='white' onPress={this.onDownloadPress}>
-            <Text>Download</Text>
+            <Text style={styles.option__text}>Download</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
