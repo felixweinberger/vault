@@ -92,8 +92,6 @@ class SummaryScreen extends React.Component {
       .filter(expense => (expense.date >= this.state.fromDate
         && expense.date <= this.state.toDate));
 
-    console.log(expenseArr);
-
     if (expenseArr.length > 0) {
       let total = 0;
       const dates = uniq(expenseArr.map(expense => expense.date)).reverse();
