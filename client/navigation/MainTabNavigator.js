@@ -22,6 +22,7 @@ const tabNavigatorConfig = {
     },
     tintColor: Colors.tintColor,
   },
+  initialRouteName: 'AddExpenseStack',
 };
 
 const SummaryStack = createStackNavigator({
