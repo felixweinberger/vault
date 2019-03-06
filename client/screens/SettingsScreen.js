@@ -100,7 +100,7 @@ class SettingsScreen extends React.Component {
           DROPBOX.AUTHORIZE_URL,
           '?response_type=token',
           `&client_id=${OAUTH_CONFIG.OAUTH_CLIENT_ID}`,
-          `&redirect_uri=${OAUTH_CONFIG.OAUTH_REDIRECT_URI}`,
+          `&redirect_uri=${OAUTH_CONFIG.OAUTH_REDIRECT_URI_DEV}`,
         ].join(''),
       );
       // console.log(result);
