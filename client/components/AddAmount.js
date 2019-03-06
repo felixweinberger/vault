@@ -12,11 +12,11 @@ const styles = StyleSheet.create({
     marginRight: 24,
   },
   amount__value: {
-    fontSize: 50,
+    fontSize: 60,
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : 'monospace',
   },
   amount__currency: {
-    fontSize: 20,
+    fontSize: 25,
     padding: 5,
     borderWidth: 1,
     borderRadius: 10,

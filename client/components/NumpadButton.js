@@ -7,6 +7,7 @@ import {
 const styles = StyleSheet.create({
   value: {
     color: 'white',
+    fontSize: 25,
   },
 });
 
