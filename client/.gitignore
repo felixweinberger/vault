@@ -1,6 +1,9 @@
 # macOS specific files
 .DS_Store
 
+# local files
+.env
+
 # mocks
 mocks
 
