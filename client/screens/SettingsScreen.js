@@ -3,14 +3,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView, StyleSheet, View, Text, TouchableOpacity,
+  ScrollView, StyleSheet, View, Text, TouchableOpacity, Switch,
 } from 'react-native';
 import { Linking, WebBrowser, Icon } from 'expo';
 import shittyQs from 'shitty-qs';
 import { Dropbox } from 'dropbox';
 
 import { updateEntities } from '../redux/actions';
-import { OAUTH_CONFIG, DROPBOX } from '../lib/dropbox/DropboxConstants';
+import { OAUTH_CONFIG, DROPBOX } from '../constants/DropboxConstants';
 import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
@@ -25,6 +25,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 20,
     marginRight: 20,
+  },
+  optionBtn: {
+    padding: 5,
+    width: 80,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'lightgrey',
   },
   sectionHeader: {
     flex: 1,
@@ -135,7 +143,7 @@ class SettingsScreen extends React.Component {
       throw new Error('Cannot perform backup without an access token');
     }
 
-    const dbx = new Dropbox({ accessToken, fetch }); // eslint-disable-line no-undef
+    const dbx = new Dropbox({ accessToken, fetch });
     const backupEntities = JSON.stringify(this.props.state.entities.expenses);
     dbx.filesUpload({ path: '/backup.json', contents: backupEntities, mode: 'overwrite' })
       .then((response) => {
@@ -152,9 +160,9 @@ class SettingsScreen extends React.Component {
       throw new Error('Cannot perform backup without an access token');
     }
 
-    const dbx = new Dropbox({ accessToken, fetch }); // eslint-disable-line no-undef
+    const dbx = new Dropbox({ accessToken, fetch });
     const response = await dbx.filesDownload({ path: '/backup.json' });
-    const text = await (new Response(response.fileBlob)).text(); // eslint-disable-line no-undef
+    const text = await (new Response(response.fileBlob)).text();
     const expenses = JSON.parse(text);
     const oldCategories = this.props.state.entities.categories;
     const categories = Object.values(expenses).reduce((acc, el) => {
@@ -162,6 +170,18 @@ class SettingsScreen extends React.Component {
       return acc;
     }, oldCategories);
     this.props.updateEntities({ expenses, categories });
+  }
+
+  onAutoBackupPress = () => {
+    this.props.updateEntities(
+      {
+        settings:
+        {
+          automaticBackup: !this.props.state.entities.settings.automaticBackup,
+        },
+      },
+    );
+    console.log('pressed autobackup');
   }
 
   render() {
@@ -181,7 +201,7 @@ class SettingsScreen extends React.Component {
         </View>
         <View style={styles.option}>
           <Text>Home Currency</Text>
-          <TouchableOpacity underlayColor='white' onPress={this.onCurrencyPress}>
+          <TouchableOpacity style={styles.optionBtn} underlayColor='white' onPress={this.onCurrencyPress}>
             <Text>{mainCurrency} ({mainCurrencySymbol})</Text>
           </TouchableOpacity>
         </View>
@@ -197,21 +217,35 @@ class SettingsScreen extends React.Component {
         </View>
         <View style={styles.option}>
           <Text style={styles.option__text}>Link Dropbox</Text>
-          <TouchableOpacity underlayColor='white' onPress={this.onDropboxLinkPress}>
-            <Text style={styles.option__text}>Authorize</Text>
+          <TouchableOpacity style={styles.optionBtn} underlayColor='white' onPress={this.onDropboxLinkPress}>
+            <Text style={styles.option__text}>Link</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.option}>
+          <Text style={styles.option__text}>Unlink Dropbox</Text>
+          <TouchableOpacity style={styles.optionBtn} underlayColor='white' onPress={this.onDropboxUnlinkPress}>
+            <Text style={styles.option__text}>Unlink</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
           <Text style={styles.option__text}>Export .json</Text>
-          <TouchableOpacity underlayColor='white' onPress={this.onUploadPress}>
+          <TouchableOpacity style={styles.optionBtn} underlayColor='white' onPress={this.onUploadPress}>
             <Text style={styles.option__text}>Upload</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
           <Text style={styles.option__text}>Import .json</Text>
-          <TouchableOpacity underlayColor='white' onPress={this.onDownloadPress}>
+          <TouchableOpacity style={styles.optionBtn} underlayColor='white' onPress={this.onDownloadPress}>
             <Text style={styles.option__text}>Download</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.option}>
+          <Text style={styles.option__text}>Automatic daily backup</Text>
+          <Switch
+            value={this.props.state.entities.settings.automaticBackup}
+            trackColor={{ true: Colors.orange6, false: 'lightgrey' }}
+            onValueChange={this.onAutoBackupPress}
+          />
         </View>
       </ScrollView>
     );

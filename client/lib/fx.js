@@ -1,7 +1,6 @@
 const ECB_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
 
 export default async function fetchFxRates() {
-  // eslint-disable-next-line no-undef
   const res = await fetch(ECB_URL);
   const raw = await res.text();
 

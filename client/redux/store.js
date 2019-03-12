@@ -15,7 +15,6 @@ export default () => {
   const store = createStore(
     persistedReducer,
     /* eslint-disable no-underscore-dangle */
-    /* eslint-disable no-undef */
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     /* eslint-enable */
   );

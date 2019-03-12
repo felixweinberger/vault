@@ -5,6 +5,11 @@
     "react-native",
     "json"
   ],
+  "globals": {
+    "fetch": true,
+    "Response": true,
+    "window": true
+  },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
