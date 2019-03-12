@@ -56,48 +56,25 @@ export default function Numpad(props) {
     <View style={styles.numpad}>
       <View style={styles.numpadLeft}>
         <View style={styles.numpad__oneToNine}>
-          <View style={styles.numpad__row}>
-            <NumpadButton
-              value={1}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange1 }]}
-              onPress={props.onNumpadPress} />
-            <NumpadButton
-              value={2}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange2 }]}
-              onPress={props.onNumpadPress} />
-            <NumpadButton
-              value={3}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange3 }]}
-              onPress={props.onNumpadPress} />
-          </View>
-          <View style={styles.numpad__row}>
-            <NumpadButton
-              value={4}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange2 }]}
-              onPress={props.onNumpadPress} />
-            <NumpadButton
-              value={5}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange3 }]}
-              onPress={props.onNumpadPress} />
-            <NumpadButton
-              value={6}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange4 }]}
-              onPress={props.onNumpadPress} />
-          </View>
-          <View style={styles.numpad__row}>
-            <NumpadButton
-              value={7}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange3 }]}
-              onPress={props.onNumpadPress} />
-            <NumpadButton
-              value={8}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange4 }]}
-              onPress={props.onNumpadPress} />
-            <NumpadButton
-              value={9}
-              style={[styles.numpad__number, { backgroundColor: Colors.orange5 }]}
-              onPress={props.onNumpadPress} />
-          </View>
+        {Array(3)
+          .fill()
+          .map((_, row) => (
+            <View key={row} style={styles.numpad__row}>
+              {Array(3)
+                .fill()
+                .map((__, column) => (
+                  <NumpadButton
+                    key={column}
+                    value={(3 * row) + (column + 1)}
+                    style={[
+                      styles.numpad__number,
+                      { backgroundColor: Colors[`orange${column + 1 + row}`] },
+                    ]}
+                    onPress={props.onNumpadPress}
+                  />
+                ))}
+            </View>
+          ))}
         </View>
         <View style={styles.numpad__zeroComma}>
           <NumpadButton

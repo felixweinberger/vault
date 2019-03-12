@@ -196,12 +196,6 @@ class AddExpenseDetailsScreen extends React.Component {
           </View>
           <View style={styles.option}>
             <View style={styles.option__text}>
-              <Text>Date</Text>
-            </View>
-            <DatePicker date={this.state.date} onDateChange={this.onDateChange} />
-          </View>
-          <View style={styles.option}>
-            <View style={styles.option__text}>
               <Text>Comment</Text>
             </View>
             <View style={styles.option__value}>
@@ -210,6 +204,12 @@ class AddExpenseDetailsScreen extends React.Component {
                 onChangeText={comment => this.setState({ comment })}
               />
             </View>
+          </View>
+          <View style={styles.option}>
+            <View style={styles.option__text}>
+              <Text>Date</Text>
+            </View>
+            <DatePicker date={this.state.date} onDateChange={this.onDateChange} />
           </View>
         </View>
         <View style={styles.actions}>

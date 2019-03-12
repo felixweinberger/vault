@@ -17,6 +17,7 @@ export const defaultSettings = {
     accessToken: null,
     accountId: null,
   },
+  automaticBackup: false,
 };
 
 export const defaultCurrencies = {

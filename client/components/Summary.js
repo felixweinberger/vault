@@ -83,25 +83,14 @@ export default function Summary(props) {
       );
     }
 
-    let amount;
-    if (props.list === 'history') {
-      amount = (
-        <View>
-          <Text style={styles.item__amount}>
-            {`${item.amount.toFixed(2)} ${item.currency} (${props.currencies[item.currency].symbol})`}
-          </Text>
-        </View>
-      );
-    } else if (props.list === 'categories') {
-      amount = (
-        <View>
-          <Text style={styles.item__amount}>
-            {`${item.amount.toFixed(2)} ${item.currency} (${props.currencies[item.currency].symbol})`}
-          </Text>
-          <Text style={styles.item__date}>{`${item.date}`}</Text>
-        </View>
-      );
-    }
+    const amount = (
+      <View>
+        <Text style={styles.item__amount}>
+          {`${item.amount.toFixed(2)} ${item.currency} (${props.currencies[item.currency].symbol})`}
+        </Text>
+        {props.list === 'categories' && <Text style={styles.item__date}>{`${item.date}`}</Text>}
+      </View>
+    );
 
     return (
       <Swipeout right={swipeoutBtns}>

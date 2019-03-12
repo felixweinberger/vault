@@ -43,10 +43,14 @@ class App extends React.Component {
 
   updateFxRates = async () => {
     const fxRates = await fetchFxRates();
-    Object.keys(fxRates).forEach((currency) => {
-      this.props.state.entities.currencies[currency].fxRatePerEuro = fxRates[currency];
-    });
-    this.props.updateEntities({ currencies: { ...this.props.state.entities.currencies } });
+    const currencies = Object.keys(fxRates).reduce((accum, currency) => ({
+      ...accum,
+      [currency]: {
+        ...accum[currency],
+        fxRatePerEuro: fxRates[currency],
+      },
+    }), this.props.state.entities.currencies);
+    this.props.updateEntities({ currencies });
   }
 
   loadResourcesAsync = async () => Promise.all([
