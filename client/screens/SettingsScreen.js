@@ -10,7 +10,7 @@ import shittyQs from 'shitty-qs';
 import { Dropbox } from 'dropbox';
 
 import { updateEntities } from '../redux/actions';
-import { OAUTH_CONFIG, DROPBOX } from '../constants/DropboxConstants';
+import { OAUTH_CONFIG, DROPBOX } from '../constants/Dropbox';
 import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
