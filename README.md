@@ -2,13 +2,11 @@
 
 *Multi-currency expense tracking that respects your privacy*
 
+![Vault](screenshots/vault.png)
+
 Vault is an offline-first, privacy-focused expense tracking app that allows you to track your expenses in multiple currencies with a few taps, without having to hand over your personal data in the process. Vault also allows you to import and export your expenses to Dropbox, providing a convenient backup mechanism.
 
 I built this app as none of the options on the app store offered backup solutions using Dropbox and most of the apps required me to sign up for a new service that would then store my personal expense data.
-
-## Screenshots
-
-![Vault](screenshots/vault.png)
 
 ## Tech Stack
 Vault is built from the ground up in React Native, using Expo SDK as a framework for rapid development. Redux is used for state and data management, using Async Storage as the main data storage solution. The Dropbox API provides a way to backup user data to the cloud without requiring the user to hand over data to Vault at any time.
