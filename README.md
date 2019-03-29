@@ -30,6 +30,8 @@ REACT_DEBUGGER="unset ELECTRON_RUN_AS_NODE && \
 open -g 'rndebugger://set-debugger-loc?port=19001' ||" npm start
 ```
 
+Within the iOS simulator then press Cmd+d and Click "Start Remote Debugging".
+
 ### Android
 
 TBD
