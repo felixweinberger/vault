@@ -12,7 +12,7 @@ I built this app as none of the options on the app store offered backup solution
 Vault is built from the ground up in React Native, using Expo SDK as a framework for rapid development. Redux is used for state and data management, using Async Storage as the main data storage solution. The Dropbox API provides a way to backup user data to the cloud without requiring the user to hand over data to Vault at any time.
 
 ## Contributing
-If you want to run or develop Vault on your local machine, you'll need to:
+If you want to run or develop Vault on your local machine, follow the instructions for each platform below:
 
 ### iOS
 
