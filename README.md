@@ -14,14 +14,14 @@ Vault is built from the ground up in React Native, using Expo SDK as a framework
 ## Contributing
 If you want to run or develop Vault on your local machine, you'll need to:
 
-**iOS**
+### iOS
 
 1. Follow the [React Native Getting Started Guide](https://itunes.apple.com/app/xcode/id497799835) to get set up with Expo
 2. Clone this repo with `git clone https://github.com/felixweinberger/vault`
 3. Run `npm install` inside the `/client` folder
 4. Start the app with `npm run ios`
 
-**Debugging**
+#### Debugging
 
 If you want to use React Native Debugger, you can run the following command in your terminal to enable live debugging (expo uses a different port to the standard React Native interface):
 
@@ -29,6 +29,6 @@ If you want to use React Native Debugger, you can run the following command in y
 `REACT_DEBUGGER="unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger-loc?port=19001' ||" npm start`
 ```
 
-**Android**
+### Android
 
 TBD
