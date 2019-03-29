@@ -25,8 +25,9 @@ If you want to run or develop Vault on your local machine, you'll need to:
 
 If you want to use React Native Debugger, you can run the following command in your terminal to enable live debugging (expo uses a different port to the standard React Native interface):
 
-```
-`REACT_DEBUGGER="unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger-loc?port=19001' ||" npm start`
+```sh
+REACT_DEBUGGER="unset ELECTRON_RUN_AS_NODE && \
+open -g 'rndebugger://set-debugger-loc?port=19001' ||" npm start
 ```
 
 ### Android
