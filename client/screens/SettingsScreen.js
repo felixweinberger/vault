@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: 'lightgrey',
+    borderColor: 'grey',
   },
   sectionHeader: {
     flex: 1,
@@ -89,7 +89,6 @@ class SettingsScreen extends React.Component {
     const [, queryString] = queryStringResult;
     const parsedQueryString = shittyQs(queryString);
     if (parsedQueryString.error) {
-      // There was an error!
       const errorCode = parsedQueryString.error;
       const errorDescription = parsedQueryString.error_description;
 
@@ -101,11 +100,9 @@ class SettingsScreen extends React.Component {
       );
     }
 
-    // Otherwise: not an error!
     const accessToken = parsedQueryString.access_token;
     const accountId = parsedQueryString.account_id;
 
-    // Persist accessToken and accountId
     return this.props.updateEntities({ settings: { dropboxAuth: { accessToken, accountId } } });
   };
 
@@ -137,39 +134,75 @@ class SettingsScreen extends React.Component {
     }
   };
 
-  onUploadPress = async () => {
-    const { accessToken } = this.props.state.entities.settings.dropboxAuth;
-    if (accessToken === null) {
-      throw new Error('Cannot perform backup without an access token');
-    }
+  onDropboxUnlinkPress = async () => {
+    try {
+      const { accessToken } = this.props.state.entities.settings.dropboxAuth;
+      if (accessToken === null) {
+        throw new Error('Cannot unlink without an access token');
+      }
 
-    const dbx = new Dropbox({ accessToken, fetch });
-    const backupEntities = JSON.stringify(this.props.state.entities.expenses);
-    dbx.filesUpload({ path: '/backup.json', contents: backupEntities, mode: 'overwrite' })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
+      const response = await fetch(DROPBOX.REVOKE_TOKEN_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
+
+      console.log('Unlink response:', response);
+      if (response.status === 200) {
+        return;
+      }
+      throw new Error(
+        `Failed to revoke Dropbox token. status: ${
+          response.status
+        } and response: ${JSON.stringify(response)}`,
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  onUploadPress = async () => {
+    try {
+      const { accessToken } = this.props.state.entities.settings.dropboxAuth;
+      if (accessToken === null) {
+        throw new Error('Cannot perform backup without an access token');
+      }
+
+      const dbx = new Dropbox({ accessToken, fetch });
+      const backupEntities = JSON.stringify(this.props.state.entities.expenses);
+      dbx.filesUpload({ path: '/backup.json', contents: backupEntities, mode: 'overwrite' })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   onDownloadPress = async () => {
-    const { accessToken } = this.props.state.entities.settings.dropboxAuth;
-    if (accessToken === null) {
-      throw new Error('Cannot perform backup without an access token');
-    }
+    try {
+      const { accessToken } = this.props.state.entities.settings.dropboxAuth;
+      if (accessToken === null) {
+        throw new Error('Cannot perform backup without an access token');
+      }
 
-    const dbx = new Dropbox({ accessToken, fetch });
-    const response = await dbx.filesDownload({ path: '/backup.json' });
-    const text = await (new Response(response.fileBlob)).text();
-    const expenses = JSON.parse(text);
-    const oldCategories = this.props.state.entities.categories;
-    const categories = Object.values(expenses).reduce((acc, el) => {
-      acc[el.category] = acc[el.category] ? acc[el.category] + 1 : 1;
-      return acc;
-    }, oldCategories);
-    this.props.updateEntities({ expenses, categories });
+      const dbx = new Dropbox({ accessToken, fetch });
+      const response = await dbx.filesDownload({ path: '/backup.json' });
+      const text = await (new Response(response.fileBlob)).text();
+      const expenses = JSON.parse(text);
+      const oldCategories = this.props.state.entities.categories;
+      const categories = Object.values(expenses).reduce((acc, el) => {
+        acc[el.category] = acc[el.category] ? acc[el.category] + 1 : 1;
+        return acc;
+      }, oldCategories);
+      this.props.updateEntities({ expenses, categories });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   onAutoBackupPress = () => {
