@@ -63,9 +63,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   category__listitem: {
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     paddingRight: 10,
+    paddingLeft: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'black',
   },
   actions: {
     flex: 2,

@@ -62,7 +62,14 @@ const styles = StyleSheet.create({
   },
   filterBtn__text: {
     color: 'white',
+    marginRight: 10,
+    paddingLeft: 10,
     paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'white',
   },
 });
 
