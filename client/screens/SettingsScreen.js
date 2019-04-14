@@ -117,7 +117,6 @@ class SettingsScreen extends React.Component {
   onDropboxLinkPress = async () => {
     try {
       this.addLinkingListener();
-      console.log(JSON.stringify(Linking.makeUrl()));
       const result = await WebBrowser.openBrowserAsync(
         [
           DROPBOX.AUTHORIZE_URL,
