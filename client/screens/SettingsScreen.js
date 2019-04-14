@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { Linking, WebBrowser, Icon } from 'expo';
 import shittyQs from 'shitty-qs';
-import { Dropbox } from 'dropbox';
 import RNFetchBlob from 'rn-fetch-blob';
 
 import { updateEntities } from '../redux/actions';
@@ -164,21 +163,26 @@ class SettingsScreen extends React.Component {
   onUploadPress = async () => {
     try {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
+      const { expenses } = this.props.state.entities;
       if (accessToken === null) {
         throw new Error('Cannot perform backup without an access token');
       }
 
-      const dbx = new Dropbox({ accessToken, fetch });
-      const backupEntities = JSON.stringify(this.props.state.entities.expenses);
-      dbx.filesUpload({ path: '/backup.json', contents: backupEntities, mode: 'overwrite' })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } catch (error) {
-      console.log(error);
+      console.log('[Dropbox backup] UPLOADING and replacing DB on Dropbox: beginning.');
+
+      const backupExpenses = btoa(JSON.stringify(expenses));
+      const response = await RNFetchBlob.fetch('POST', DROPBOX.UPLOAD_URL, {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/octet-stream',
+        'Dropbox-API-Arg': JSON.stringify({
+          path: '/backup.json',
+          mode: 'overwrite',
+        }),
+      }, backupExpenses);
+
+      console.log('[Dropbox backup] UPLOAD to Dropbox complete!', response);
+    } catch (e) {
+      console.log('Error: ', e);
     }
   }
 

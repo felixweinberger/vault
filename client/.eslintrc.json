@@ -8,7 +8,8 @@
   "globals": {
     "fetch": true,
     "Response": true,
-    "window": true
+    "window": true,
+    "btoa": true
   },
   "parserOptions": {
     "ecmaFeatures": {
