@@ -8,7 +8,7 @@ import {
 import { Linking, WebBrowser, Icon } from 'expo';
 import shittyQs from 'shitty-qs';
 import { Dropbox } from 'dropbox';
-// import RNFetchBlob from 'rn-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import { updateEntities } from '../redux/actions';
 import { OAUTH_CONFIG, DROPBOX } from '../constants/Dropbox';
@@ -191,18 +191,24 @@ class SettingsScreen extends React.Component {
 
       console.log('[Dropbox backup] DOWNLOADING and applying DB from Dropbox: beginning.');
 
-      const dbx = new Dropbox({ accessToken, fetch });
-      const response = await dbx.filesDownload({ path: '/backup.json' });
-      const text = await (new Response(response.fileBlob)).text();
-      const expenses = JSON.parse(text);
+      const response = await RNFetchBlob.fetch('POST', DROPBOX.DOWNLOAD_URL, {
+        Authorization: `Bearer ${accessToken}`,
+        'Dropbox-API-Arg': JSON.stringify({
+          path: '/backup.json',
+        }),
+      });
+
+      console.log('[Dropbox backup] DOWNLOAD from Dropbox complete!');
+
+      const expenses = await response.json();
       const oldCategories = this.props.state.entities.categories;
       const categories = Object.values(expenses).reduce((acc, el) => {
         acc[el.category] = acc[el.category] ? acc[el.category] + 1 : 1;
         return acc;
       }, oldCategories);
       this.props.updateEntities({ expenses, categories });
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log('Error: ', e);
     }
   }
 
