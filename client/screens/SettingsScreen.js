@@ -126,7 +126,6 @@ class SettingsScreen extends React.Component {
           `&redirect_uri=${OAUTH_CONFIG.OAUTH_REDIRECT_URI_DEV}`,
         ].join(''),
       );
-      // console.log(result);
       this.setState({ result });
       this.removeLinkingListener();
     } catch (error) {
