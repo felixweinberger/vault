@@ -245,6 +245,8 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - rn-fetch-blob (0.10.6):
+    - React/Core
   - yoga (0.57.1.React)
 
 DEPENDENCIES:
@@ -301,6 +303,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -411,6 +414,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
     :path: "../node_modules/react-native"
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -482,8 +487,9 @@ SPEC CHECKSUMS:
   JKBigInteger2: e91672035c42328c48b7dd015b66812ddf40ca9b
   lottie-ios: a50d5c0160425cd4b01b852bb9578963e6d92d31
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  rn-fetch-blob: 76a8f798dae965bbcd146a2438f2e1d381c91ae3
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: c0c53832f3f73c0a41cbcc3e23fda07ae46bba0e
+PODFILE CHECKSUM: 5e8773e649bfe4cda3b94b214b70532beec5db28
 
 COCOAPODS: 1.5.3

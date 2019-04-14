@@ -114,6 +114,8 @@ target 'vault' do
     :inhibit_warnings => true
 
 
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
   post_install do |installer|
     installer.pods_project.main_group.tab_width = '2';
     installer.pods_project.main_group.indent_width = '2';

@@ -8,6 +8,7 @@ import {
 import { Linking, WebBrowser, Icon } from 'expo';
 import shittyQs from 'shitty-qs';
 import { Dropbox } from 'dropbox';
+// import RNFetchBlob from 'rn-fetch-blob';
 
 import { updateEntities } from '../redux/actions';
 import { OAUTH_CONFIG, DROPBOX } from '../constants/Dropbox';
@@ -187,6 +188,8 @@ class SettingsScreen extends React.Component {
       if (accessToken === null) {
         throw new Error('Cannot perform backup without an access token');
       }
+
+      console.log('[Dropbox backup] DOWNLOADING and applying DB from Dropbox: beginning.');
 
       const dbx = new Dropbox({ accessToken, fetch });
       const response = await dbx.filesDownload({ path: '/backup.json' });
