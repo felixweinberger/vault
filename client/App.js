@@ -8,7 +8,7 @@ import AppContainer from './containers/AppContainer';
 import configureStore from './redux/store';
 
 // Clear async storage for test only
-if (ENV === 'test') {
+if (ENV === 'dev') {
   const clearAsyncStorage = async () => {
     AsyncStorage.clear();
   };

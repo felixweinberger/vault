@@ -93,8 +93,8 @@ class SettingsScreen extends React.Component {
       const errorCode = parsedQueryString.error;
       const errorDescription = parsedQueryString.error_description;
 
-      console.error('Dropbox OAuth error! code:', errorCode);
-      console.error('Error description:', errorDescription);
+      console.log('Dropbox OAuth log! code:', errorCode);
+      console.log('Error description:', errorDescription);
 
       return Promise.reject(
         new Error(`Could not authorize with Dropbox. Code: ${errorCode}`),
@@ -149,6 +149,9 @@ class SettingsScreen extends React.Component {
 
       console.log('Unlink response:', response);
       if (response.status === 200) {
+        this.props.updateEntities({
+          settings: { dropboxAuth: { accessToken: null, accountId: null } },
+        });
         return;
       }
       throw new Error(
@@ -193,7 +196,7 @@ class SettingsScreen extends React.Component {
     try {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
       if (accessToken === null) {
-        throw new Error('Cannot perform backup without an access token');
+        throw new Error('Cannot download without an access token');
       }
 
       console.log('[Dropbox backup] DOWNLOADING and applying DB from Dropbox: beginning.');
@@ -213,7 +216,7 @@ class SettingsScreen extends React.Component {
         expenses[expense.id] = expense;
       });
 
-      console.log('[Dropbox backup] CONVERSTION to json complete!');
+      console.log('[Dropbox backup] CONVERSION to JSON complete!');
 
       const oldCategories = this.props.state.entities.categories;
       const categories = Object.values(expenses).reduce((acc, el) => {
