@@ -3,11 +3,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView, StyleSheet, View, Text, TouchableOpacity, Switch,
+  ScrollView, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import { Linking, WebBrowser, Icon } from 'expo';
 import shittyQs from 'shitty-qs';
 import RNFetchBlob from 'rn-fetch-blob';
+import converter from 'json-2-csv';
 
 import { updateEntities } from '../redux/actions';
 import { OAUTH_CONFIG, DROPBOX } from '../constants/Dropbox';
@@ -170,12 +171,14 @@ class SettingsScreen extends React.Component {
 
       console.log('[Dropbox backup] UPLOADING and replacing DB on Dropbox: beginning.');
 
-      const backupExpenses = btoa(JSON.stringify(expenses));
+      const jsonArr = Object.values(expenses);
+      const csvStr = await converter.json2csvAsync(jsonArr);
+      const backupExpenses = btoa(csvStr);
       const response = await RNFetchBlob.fetch('POST', DROPBOX.UPLOAD_URL, {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/octet-stream',
         'Dropbox-API-Arg': JSON.stringify({
-          path: '/backup.json',
+          path: '/backup.csv',
           mode: 'overwrite',
         }),
       }, backupExpenses);
@@ -198,34 +201,30 @@ class SettingsScreen extends React.Component {
       const response = await RNFetchBlob.fetch('POST', DROPBOX.DOWNLOAD_URL, {
         Authorization: `Bearer ${accessToken}`,
         'Dropbox-API-Arg': JSON.stringify({
-          path: '/backup.json',
+          path: '/backup.csv',
         }),
       });
 
       console.log('[Dropbox backup] DOWNLOAD from Dropbox complete!');
 
-      const expenses = await response.json();
+      const jsonArr = await converter.csv2jsonAsync(response.data);
+      const expenses = {};
+      jsonArr.forEach((expense) => {
+        expenses[expense.id] = expense;
+      });
+
+      console.log('[Dropbox backup] CONVERSTION to json complete!');
+
       const oldCategories = this.props.state.entities.categories;
       const categories = Object.values(expenses).reduce((acc, el) => {
         acc[el.category] = acc[el.category] ? acc[el.category] + 1 : 1;
         return acc;
       }, oldCategories);
       this.props.updateEntities({ expenses, categories });
+      console.log('[Dropbox backup] IMPORT from Dropbox complete!');
     } catch (e) {
       console.log('Error: ', e);
     }
-  }
-
-  onAutoBackupPress = () => {
-    this.props.updateEntities(
-      {
-        settings:
-        {
-          automaticBackup: !this.props.state.entities.settings.automaticBackup,
-        },
-      },
-    );
-    console.log('pressed autobackup');
   }
 
   render() {
@@ -272,24 +271,16 @@ class SettingsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Export .json</Text>
+          <Text style={styles.option__text}>Export CSV to Dropbox</Text>
           <TouchableOpacity style={styles.optionBtn} underlayColor='white' onPress={this.onUploadPress}>
             <Text style={styles.option__text}>Upload</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Import .json</Text>
+          <Text style={styles.option__text}>Import CSV from Dropbox</Text>
           <TouchableOpacity style={styles.optionBtn} underlayColor='white' onPress={this.onDownloadPress}>
             <Text style={styles.option__text}>Download</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.option}>
-          <Text style={styles.option__text}>Automatic daily backup</Text>
-          <Switch
-            value={this.props.state.entities.settings.automaticBackup}
-            trackColor={{ true: Colors.orange6, false: 'lightgrey' }}
-            onValueChange={this.onAutoBackupPress}
-          />
         </View>
       </ScrollView>
     );

@@ -1,14 +1,14 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+import { AsyncStorage } from 'react-native';
 import { ENV } from 'react-native-dotenv';
 
 import AppContainer from './containers/AppContainer';
 import configureStore from './redux/store';
 
-// Clear async storage for dev only
-if (ENV === 'dev') {
+// Clear async storage for test only
+if (ENV === 'test') {
   const clearAsyncStorage = async () => {
     AsyncStorage.clear();
   };

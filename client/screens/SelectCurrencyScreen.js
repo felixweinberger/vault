@@ -119,7 +119,7 @@ class SelectCurrencyScreen extends React.Component {
 
   render() {
     const currencies = Object.values(this.props.state.entities.currencies)
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .sort((a, b) => a.id.localeCompare(b.id));
 
     return (
       <FlatList
