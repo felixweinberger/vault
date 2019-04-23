@@ -1,0 +1,8 @@
+app_identifier("com.felixweinberger.vault") # The bundle identifier of your app
+apple_id("felix.weinberger@gmail.com") # Your Apple email address
+
+itc_team_id("120056484") # App Store Connect Team ID
+team_id("5XW5YHV984") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
