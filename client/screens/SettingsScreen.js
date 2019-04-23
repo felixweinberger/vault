@@ -209,8 +209,9 @@ class SettingsScreen extends React.Component {
       });
 
       console.log('[Dropbox backup] DOWNLOAD from Dropbox complete!');
+      const text = response.text();
 
-      const jsonArr = await converter.csv2jsonAsync(response.data);
+      const jsonArr = await converter.csv2jsonAsync(text);
       const expenses = {};
       jsonArr.forEach((expense) => {
         expenses[expense.id] = expense;
