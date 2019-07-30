@@ -16,10 +16,13 @@ If you want to run or develop Vault on your local machine, you'll need to:
 
 ### iOS
 
-1. Follow the [React Native Getting Started Guide](https://itunes.apple.com/app/xcode/id497799835) to get set up with Expo
-2. Clone this repo with `git clone https://github.com/felixweinberger/vault`
-3. Run `npm install` inside the `/client` folder
-4. Start the app with `npm run ios`
+1. Clone this repo with `git clone https://github.com/felixweinberger/vault`
+2. Run `npm install` inside the `/client` folder
+3. Run `npx react-native link` to link up the native dependencies (e.g. RNFetchBlob)
+4. Ensure you have `cocoapods version 1.5.3` installed (needed for version 32 of ExpoKit)
+5. `cd` into the `/client/ios` folder and run `pod install`
+   1. You may need to install `git-lfs` first - run `brew install git-lfs` and then `git lfs install`
+6. Open the `.xcworkspace` file in XCode and run it with `⌘ + R`
 
 #### Debugging
 
