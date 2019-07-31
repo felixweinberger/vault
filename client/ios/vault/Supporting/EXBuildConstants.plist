@@ -16,6 +16,6 @@
 	<key>TEMPORARY_SDK_VERSION</key>
 	<string>32.0.0</string>
 	<key>developmentUrl</key>
-	<string>vault://172.20.10.6:19000</string>
+	<string>vault://10.22.161.11:19000</string>
 </dict>
 </plist>

@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ScrollView, StyleSheet, View, Text, TouchableOpacity,
+  ScrollView, StyleSheet, View, Text, TouchableOpacity, Alert,
 } from 'react-native';
 import { Linking, WebBrowser, Icon } from 'expo';
 import shittyQs from 'shitty-qs';
@@ -127,8 +126,14 @@ class SettingsScreen extends React.Component {
         ].join(''),
       );
       this.setState({ result });
+      Alert.alert(
+        'Success',
+        'Your Dropbox account has been successfully linked! Your expenses can now be backed up to Dropbox/Apps/vault-expenses-app/backup.csv',
+        [{ text: 'OK' }],
+      );
       this.removeLinkingListener();
     } catch (error) {
+      Alert.alert('Failure', 'An error occured communicating with Dropbox. Please try again later.', [{ text: 'OK' }]);
       console.log(error);
     }
   };
@@ -152,8 +157,10 @@ class SettingsScreen extends React.Component {
         this.props.updateEntities({
           settings: { dropboxAuth: { accessToken: null, accountId: null } },
         });
+        Alert.alert('Success', 'Your Dropbox authorization has been sucessfully revoked.', [{ text: 'OK' }]);
         return;
       }
+      Alert.alert('Failure', 'Something went wrong revoking your Dropbox authorization. please try again later.', [{ text: 'OK' }]);
       throw new Error(
         `Failed to revoke Dropbox token. status: ${
           response.status
@@ -186,8 +193,10 @@ class SettingsScreen extends React.Component {
         }),
       }, backupExpenses);
 
+      Alert.alert('Success', 'Upload to Dropbox complete! Access your backup at Dropbox/Apps/vault-expenses-app/backup.csv', [{ text: 'OK' }]);
       console.log('[Dropbox backup] UPLOAD to Dropbox complete!', response);
     } catch (e) {
+      Alert.alert('Failure', 'Failed to upload your backup to Dropbox. Please try again later.', [{ text: 'OK' }]);
       console.log('Error: ', e);
     }
   }
@@ -225,8 +234,10 @@ class SettingsScreen extends React.Component {
         return acc;
       }, oldCategories);
       this.props.updateEntities({ expenses, categories });
+      Alert.alert('Success', 'Download from Dropbox complete! Your expenses now appear in the summary', [{ text: 'OK' }]);
       console.log('[Dropbox backup] IMPORT from Dropbox complete!');
     } catch (e) {
+      Alert.alert('Failure', 'Failed to download your backup from Dropbox. Please try again later.', [{ text: 'OK' }]);
       console.log('Error: ', e);
     }
   }
