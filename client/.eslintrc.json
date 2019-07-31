@@ -20,7 +20,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb-base"
+    "airbnb-base",
+    "prettier"
   ],
   "settings": {
     "react": {
