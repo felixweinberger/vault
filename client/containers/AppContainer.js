@@ -37,13 +37,13 @@ class App extends React.Component {
       }
     } = this.props;
 
-    if (automaticBackup && currentState === 'active') {
+    if (automaticBackup && currentState === "active") {
       try {
         dropboxUpload(accessToken, expenses);
       } catch (_) {
         // fail silently
       }
-    };
+    }
   };
 
   updateFxRates = async () => {
