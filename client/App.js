@@ -8,6 +8,7 @@ import AppContainer from './containers/AppContainer';
 import configureStore from './redux/store';
 
 // Clear async storage for test only
+console.disableYellowBox = true;
 if (ENV === 'dev') {
   const clearAsyncStorage = async () => {
     AsyncStorage.clear();
