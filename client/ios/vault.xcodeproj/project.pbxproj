@@ -396,7 +396,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5XW5YHV984;
-				INFOPLIST_FILE = "$(SRCROOT)/vault/Supporting/Info.plist";
+				INFOPLIST_FILE = "vault/Supporting/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.felixweinberger.vault;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -413,7 +413,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5XW5YHV984;
-				INFOPLIST_FILE = "$(SRCROOT)/vault/Supporting/Info.plist";
+				INFOPLIST_FILE = "vault/Supporting/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.felixweinberger.vault;
 				PRODUCT_NAME = "$(TARGET_NAME)";
