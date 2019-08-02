@@ -4,7 +4,7 @@
  */
 
 export const OAUTH_CONFIG = {
-  OAUTH_REDIRECT_URI_DEV: 'exp://127.0.0.1:19000',
+  OAUTH_REDIRECT_URI_DEV: 'vault://oauthredirect',
   OAUTH_REDIRECT_URI_PROD: 'vault://oauthredirect',
   OAUTH_CLIENT_ID: 'furmsyiaaatou4o',
 };

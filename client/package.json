@@ -32,12 +32,14 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-native": "^3.6.0",
     "expo": "^32.0.0",
+    "expokit": "^32.1.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "5.0.0",
     "gulp-load-plugins": "1.5.0",
     "gulp-replace": "1.0.0",
     "husky": "1.1.2",
     "jest-expo": "^32.0.0",
+    "json-2-csv": "^3.5.0",
     "lodash": "^4.17.11",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
@@ -49,8 +51,12 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^5.10.0",
+    "rn-fetch-blob": "^0.10.15",
     "shitty-qs": "^1.0.1",
     "uuid": "^3.3.2"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "eslint-config-prettier": "^6.0.0"
+  }
 }

@@ -20,12 +20,19 @@ export default function AddExpenseDetailsScreen(props) {
             textAlign: 'center',
             alignSelf: 'stretch',
             color: props.fontColor,
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingTop: 5,
+            paddingBottom: 5,
+            borderWidth: 1,
+            borderRadius: 10,
+            borderColor: props.fontColor,
           },
           btnTextConfirm: {
             color: Colors.orange6,
           },
         }}
-        style={{ width: 80 }}
+        style={{ width: 100 }}
         date={props.date}
         mode="date"
         placeholder="select date"
