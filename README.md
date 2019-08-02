@@ -18,11 +18,13 @@ If you want to run or develop Vault on your local machine, follow the instructio
 
 1. Clone this repo with `git clone https://github.com/felixweinberger/vault`
 2. Run `npm install` inside the `/client` folder
-3. Run `npx react-native link` to link up the native dependencies (e.g. RNFetchBlob)
-4. Ensure you have `cocoapods version 1.5.3` installed (needed for version 32 of ExpoKit)
-5. `cd` into the `/client/ios` folder and run `pod install`
+3. Ensure you have `cocoapods version 1.5.3` installed (needed for version 32 of ExpoKit)
+4. `cd` into the `/client/ios` folder and run `pod install`
    1. You may need to install `git-lfs` first - run `brew install git-lfs` and then `git lfs install`
-6. Open the `.xcworkspace` file in XCode and run it with `⌘ + R`
+5. Run `npm start` in `/client`
+6. Open the `/client/ios/vault.xcworkspace` file in XCode
+7. For development, make sure the scheme (click on small logo top left -> "edit scheme") is set to "Debug"
+8. Run the app in XCode with `⌘ + R`
 
 #### Debugging
 
