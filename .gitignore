@@ -13,6 +13,9 @@ npm-debug.log*
 # Builds
 build
 
+# iOS build files
+*.dSYM.zip
+
 # Runtime data
 pids
 *.pid
