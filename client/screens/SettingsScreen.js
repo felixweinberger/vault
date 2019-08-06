@@ -333,10 +333,10 @@ class SettingsScreen extends React.Component {
       if (accessToken === null) {
         Alert.alert(
           "Dropbox not linked.",
-          "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
+          "Vault has not been linked to Dropbox yet. Please link your Dropbox account before enabling automatic backups.",
           [{ text: "OK" }]
         );
-        throw new Error("Cannot download without an access token");
+        return;
       }
 
       this.props.updateEntities({
