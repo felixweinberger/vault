@@ -199,6 +199,13 @@ class SettingsScreen extends React.Component {
         this.props.updateEntities({
           settings: { dropboxAuth: { accessToken: null, accountId: null } }
         });
+
+        this.props.updateEntities({
+          settings: {
+            automaticBackup: !this.props.state.entities.settings.automaticBackup
+          }
+        });
+
         Alert.alert(
           "Success",
           "Your Dropbox authorization has been sucessfully revoked.",
