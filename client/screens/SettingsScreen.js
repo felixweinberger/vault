@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20
   },
+  status__text: {
+    flex: 1,
+    fontStyle: "italic",
+    textAlign: "center"
+  },
   optionBtn: {
     padding: 5,
     width: 80,
@@ -108,10 +113,10 @@ class SettingsScreen extends React.Component {
 
     const accessToken = parsedQueryString.access_token;
     const accountId = parsedQueryString.account_id;
-    const authenticated = true;
+    const isLinked = true;
 
     return this.props.updateEntities({
-      settings: { dropboxAuth: { accessToken, accountId, authenticated } }
+      settings: { dropboxAuth: { accessToken, accountId, isLinked } }
     });
   };
 
@@ -125,8 +130,8 @@ class SettingsScreen extends React.Component {
 
   onDropboxLinkPress = async () => {
     try {
-      const { authenticated } = this.props.state.entities.settings.dropboxAuth;
-      if (authenticated) {
+      const { isLinked } = this.props.state.entities.settings.dropboxAuth;
+      if (isLinked) {
         Alert.alert(
           "Already linked.",
           "Your Dropbox account has already been linked! If you want to change your linked account, please unlink your current account first.",
@@ -272,10 +277,10 @@ class SettingsScreen extends React.Component {
       if (accessToken === null) {
         Alert.alert(
           "Dropbox not linked.",
-          "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
+          "Vault has not been linked to Dropbox yet.",
           [{ text: "OK" }]
         );
-        throw new Error("Cannot download without an access token");
+        return;
       }
 
       console.log(
@@ -353,13 +358,16 @@ class SettingsScreen extends React.Component {
           automaticBackup: false
         }
       });
-      
-      console.log('Error: ', e);
+
+      console.log("Error: ", e);
     }
   };
 
   render() {
-    const { mainCurrency } = this.props.state.entities.settings;
+    const {
+      mainCurrency,
+      dropboxAuth: { isLinked }
+    } = this.props.state.entities.settings;
     const mainCurrencySymbol = this.props.state.entities.currencies[
       mainCurrency
     ].symbol;
@@ -403,52 +411,62 @@ class SettingsScreen extends React.Component {
           </View>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Link Dropbox</Text>
+          <Text>Link Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onDropboxLinkPress}
           >
-            <Text style={styles.option__text}>Link</Text>
+            <Text>Link</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Unlink Dropbox</Text>
+          <Text>Unlink Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onDropboxUnlinkPress}
           >
-            <Text style={styles.option__text}>Unlink</Text>
+            <Text>Unlink</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Export CSV to Dropbox</Text>
+          <Text>Export CSV to Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onUploadPress}
           >
-            <Text style={styles.option__text}>Upload</Text>
+            <Text>Upload</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Import CSV from Dropbox</Text>
+          <Text>Import CSV from Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onDownloadPress}
           >
-            <Text style={styles.option__text}>Download</Text>
+            <Text>Download</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text style={styles.option__text}>Automatic backup</Text>
+          <Text>Automatic backup</Text>
           <Switch
             value={this.props.state.entities.settings.automaticBackup}
             trackColor={{ true: Colors.orange6, false: "lightgrey" }}
             onValueChange={this.onAutoBackupPress}
           />
+        </View>
+        <View style={styles.option}>
+          <Text style={styles.status__text}>
+            Dropbox status:{" "}
+            {isLinked ? (
+              <Text style={{ color: "darkgreen" }}>Linked</Text>
+            ) : (
+              <Text style={{ color: "darkred" }}>Not linked</Text>
+            )}
+          </Text>
         </View>
       </ScrollView>
     );
