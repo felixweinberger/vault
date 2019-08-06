@@ -221,6 +221,11 @@ class SettingsScreen extends React.Component {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
       const { expenses } = this.props.state.entities;
       if (accessToken === null) {
+        Alert.alert(
+          "Dropbox not linked.",
+          "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
+          [{ text: "OK" }]
+        );
         throw new Error("Cannot perform backup without an access token");
       }
 
@@ -265,6 +270,11 @@ class SettingsScreen extends React.Component {
     try {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
       if (accessToken === null) {
+        Alert.alert(
+          "Dropbox not linked.",
+          "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
+          [{ text: "OK" }]
+        );
         throw new Error("Cannot download without an access token");
       }
 
@@ -313,11 +323,39 @@ class SettingsScreen extends React.Component {
   };
 
   onAutoBackupPress = () => {
-    this.props.updateEntities({
-      settings: {
-        automaticBackup: !this.props.state.entities.settings.automaticBackup
+    try {
+      const { accessToken } = this.props.state.entities.settings.dropboxAuth;
+      if (accessToken === null) {
+        Alert.alert(
+          "Dropbox not linked.",
+          "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
+          [{ text: "OK" }]
+        );
+        throw new Error("Cannot download without an access token");
       }
-    });
+
+      this.props.updateEntities({
+        settings: {
+          automaticBackup: !this.props.state.entities.settings.automaticBackup
+        }
+      });
+
+      this.onDownloadPress();
+    } catch (e) {
+      Alert.alert(
+        "Failure",
+        "Failed to download your backup from Dropbox. Please try again later.",
+        [{ text: "OK" }]
+      );
+
+      this.props.updateEntities({
+        settings: {
+          automaticBackup: false
+        }
+      });
+      
+      console.log('Error: ', e);
+    }
   };
 
   render() {
