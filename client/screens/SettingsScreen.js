@@ -108,9 +108,10 @@ class SettingsScreen extends React.Component {
 
     const accessToken = parsedQueryString.access_token;
     const accountId = parsedQueryString.account_id;
+    const authenticated = true;
 
     return this.props.updateEntities({
-      settings: { dropboxAuth: { accessToken, accountId } }
+      settings: { dropboxAuth: { accessToken, accountId, authenticated } }
     });
   };
 
@@ -124,7 +125,18 @@ class SettingsScreen extends React.Component {
 
   onDropboxLinkPress = async () => {
     try {
+      const { authenticated } = this.props.state.entities.settings.dropboxAuth;
+      if (authenticated) {
+        Alert.alert(
+          "Already linked.",
+          "Your Dropbox account has already been linked! If you want to change your linked account, please unlink your current account first.",
+          [{ text: "OK" }]
+        );
+        return;
+      }
+
       this.addLinkingListener();
+
       const result = await WebBrowser.openBrowserAsync(
         [
           DROPBOX.AUTHORIZE_URL,
@@ -134,11 +146,19 @@ class SettingsScreen extends React.Component {
         ].join("")
       );
       this.setState({ result });
-      Alert.alert(
-        "Success",
-        "Your Dropbox account has been successfully linked! Your expenses can now be backed up to Dropbox/Apps/vault-expenses-app/backup.csv",
-        [{ text: "OK" }]
-      );
+
+      if (result.type === "dismiss") {
+        Alert.alert(
+          "Success",
+          "Your Dropbox account has been successfully linked! Your expenses can now be backed up to Dropbox/Apps/vault-expenses-app/backup.csv",
+          [{ text: "OK" }]
+        );
+      } else {
+        Alert.alert("Cancelled", "Your Dropbox account has not been linked.", [
+          { text: "OK" }
+        ]);
+      }
+
       this.removeLinkingListener();
     } catch (error) {
       Alert.alert(

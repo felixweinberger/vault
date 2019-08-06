@@ -16,6 +16,7 @@ export const defaultSettings = {
   dropboxAuth: {
     accessToken: null,
     accountId: null,
+    authenticated: false,
   },
   automaticBackup: false,
 };
