@@ -174,6 +174,11 @@ class SettingsScreen extends React.Component {
     try {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
       if (accessToken === null) {
+        Alert.alert(
+          "Dropbox not linked.",
+          "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
+          [{ text: "OK" }]
+        );
         throw new Error("Cannot unlink without an access token");
       }
 
