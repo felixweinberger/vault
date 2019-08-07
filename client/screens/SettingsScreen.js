@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
   options: {
     backgroundColor: Colors.greyLight
   },
+  defaultText: {
+    fontSize: 16
+  },
   option: {
     flex: 1,
     height: 60,
@@ -35,11 +38,12 @@ const styles = StyleSheet.create({
   status__text: {
     flex: 1,
     fontStyle: "italic",
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: 16
   },
   optionBtn: {
     padding: 5,
-    width: 80,
+    width: 100,
     alignItems: "center",
     borderWidth: 1,
     borderRadius: 10,
@@ -133,7 +137,7 @@ class SettingsScreen extends React.Component {
       const { isLinked } = this.props.state.entities.settings.dropboxAuth;
       if (isLinked) {
         Alert.alert(
-          "Already linked.",
+          "Already linked",
           "Your Dropbox account has already been linked! If you want to change your linked account, please unlink your current account first.",
           [{ text: "OK" }]
         );
@@ -180,7 +184,7 @@ class SettingsScreen extends React.Component {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
       if (accessToken === null) {
         Alert.alert(
-          "Dropbox not linked.",
+          "Dropbox not linked",
           "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
           [{ text: "OK" }]
         );
@@ -234,7 +238,7 @@ class SettingsScreen extends React.Component {
       const { expenses } = this.props.state.entities;
       if (accessToken === null) {
         Alert.alert(
-          "Dropbox not linked.",
+          "Dropbox not linked",
           "Vault has not been linked to Dropbox yet. There is nothing to unlink.",
           [{ text: "OK" }]
         );
@@ -283,7 +287,7 @@ class SettingsScreen extends React.Component {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
       if (accessToken === null) {
         Alert.alert(
-          "Dropbox not linked.",
+          "Dropbox not linked",
           "Vault has not been linked to Dropbox yet.",
           [{ text: "OK" }]
         );
@@ -339,7 +343,7 @@ class SettingsScreen extends React.Component {
       const { accessToken } = this.props.state.entities.settings.dropboxAuth;
       if (accessToken === null) {
         Alert.alert(
-          "Dropbox not linked.",
+          "Dropbox not linked",
           "Vault has not been linked to Dropbox yet. Please link your Dropbox account before enabling automatic backups.",
           [{ text: "OK" }]
         );
@@ -395,13 +399,13 @@ class SettingsScreen extends React.Component {
           </View>
         </View>
         <View style={styles.option}>
-          <Text>Home Currency</Text>
+          <Text style={styles.defaultText}>Home Currency</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onCurrencyPress}
           >
-            <Text>
+            <Text style={styles.defaultText}>
               {mainCurrency} ({mainCurrencySymbol})
             </Text>
           </TouchableOpacity>
@@ -418,47 +422,47 @@ class SettingsScreen extends React.Component {
           </View>
         </View>
         <View style={styles.option}>
-          <Text>Link Dropbox</Text>
+          <Text style={styles.defaultText}>Link Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onDropboxLinkPress}
           >
-            <Text>Link</Text>
+            <Text style={styles.defaultText}>Link</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Unlink Dropbox</Text>
+          <Text style={styles.defaultText}>Unlink Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onDropboxUnlinkPress}
           >
-            <Text>Unlink</Text>
+            <Text style={styles.defaultText}>Unlink</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Export CSV to Dropbox</Text>
+          <Text style={styles.defaultText}>Export CSV to Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onUploadPress}
           >
-            <Text>Upload</Text>
+            <Text style={styles.defaultText}>Upload</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Import CSV from Dropbox</Text>
+          <Text style={styles.defaultText}>Import CSV from Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
             underlayColor="white"
             onPress={this.onDownloadPress}
           >
-            <Text>Download</Text>
+            <Text style={styles.defaultText}>Download</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.option}>
-          <Text>Automatic backup</Text>
+          <Text style={styles.defaultText}>Automatic backup</Text>
           <Switch
             value={this.props.state.entities.settings.automaticBackup}
             trackColor={{ true: Colors.orange6, false: "lightgrey" }}
@@ -469,9 +473,9 @@ class SettingsScreen extends React.Component {
           <Text style={styles.status__text}>
             Dropbox status:{" "}
             {isLinked ? (
-              <Text style={{ color: "darkgreen" }}>Linked</Text>
+              <Text style={[styles.defaultText, { color: "darkgreen" }]}>Linked</Text>
             ) : (
-              <Text style={{ color: "darkred" }}>Not linked</Text>
+              <Text style={[styles.defaultText, { color: "darkred" }]}>Not linked</Text>
             )}
           </Text>
         </View>

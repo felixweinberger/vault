@@ -27,21 +27,25 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
   currency__lt: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: 16
   },
   currency__lb: {
     color: Colors.orange6,
-    fontStyle: "italic"
+    fontStyle: "italic",
+    fontSize: 16
   },
   currency__rt: {
     textAlign: "right",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: 16
   },
   currency__rb: {
     color: Colors.orange6,
     textAlign: "right",
-    fontStyle: "italic"
-  }
+    fontStyle: "italic",
+    fontSize: 16
+  },
 });
 
 class SelectCurrencyScreen extends React.Component {

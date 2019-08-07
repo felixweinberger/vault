@@ -18,6 +18,7 @@ export default function AddExpenseDetailsScreen(props) {
           },
           dateText: {
             textAlign: 'center',
+            fontSize: 16,
             alignSelf: 'stretch',
             color: props.fontColor,
             paddingLeft: 10,
