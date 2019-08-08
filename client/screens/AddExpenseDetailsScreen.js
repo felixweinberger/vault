@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
+import { Icon } from "expo";
 
 import { updateEntities } from "../redux/actions";
 import DatePicker from "../components/DatePicker";
@@ -106,11 +107,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16
   },
+  inputContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomColor: Colors.orange6,
+    borderBottomWidth: 1,
+  },
   input: {
     paddingVertical: 5,
     flex: 1,
-    borderBottomColor: Colors.orange6,
-    borderBottomWidth: 1,
     fontSize: 16
   }
 });
@@ -124,7 +130,8 @@ class AddExpenseDetailsScreen extends React.Component {
     amount: 0,
     currency: "EUR",
     date: null,
-    currencies: this.props.state.entities.currencies
+    currencies: this.props.state.entities.currencies,
+    category: null
   };
 
   onFocus = () => {
@@ -212,12 +219,22 @@ class AddExpenseDetailsScreen extends React.Component {
         <View style={styles.options}>
           <View style={styles.category}>
             <View style={styles.category__label}>
-              <TextInput
-                placeholder="Category (required)"
-                value={this.state.category ? this.state.category : null}
-                onChangeText={category => this.setState({ category })}
-                style={styles.input}
-              />
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="Category (required)"
+                  value={this.state.category ? this.state.category : null}
+                  onChangeText={category => this.setState({ category })}
+                  style={styles.input}
+                />
+                {this.state.category && (
+                  <Icon.Ionicons
+                    name={"ios-backspace"}
+                    size={26}
+                    style={styles.backBtn}
+                    onPress={() => this.setState({ category: null })}
+                  />
+                )}
+              </View>
             </View>
             <ScrollView
               style={styles.category__scrollview}
@@ -227,11 +244,22 @@ class AddExpenseDetailsScreen extends React.Component {
             </ScrollView>
           </View>
           <View style={styles.option}>
-            <TextInput
-              placeholder="Comment"
-              onChangeText={comment => this.setState({ comment })}
-              style={styles.input}
-            />
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Comment"
+                value={this.state.comment ? this.state.comment : null}
+                onChangeText={comment => this.setState({ comment })}
+                style={styles.input}
+              />
+              {this.state.comment && (
+                <Icon.Ionicons
+                  name={"ios-backspace"}
+                  size={26}
+                  style={styles.backBtn}
+                  onPress={() => this.setState({ comment: null })}
+                />
+              )}
+            </View>
           </View>
           <View style={styles.option}>
             <Text style={styles.option__text}>Date</Text>
