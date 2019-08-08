@@ -56,14 +56,29 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     fontSize: 16
+  },
+  deleteBtn: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  deleteBtnText: {
+    color: 'white',
+    fontSize: 16
   }
 });
 
 export default function Summary(props) {
   const renderItem = ({ item }) => {
+    const deleteBtn = (
+      <View style={styles.deleteBtn}>
+        <Text style={styles.deleteBtnText}>Delete</Text>
+      </View>
+    )
+    
     const swipeoutBtns = [
       {
-        text: "Delete",
+        component: deleteBtn,
         backgroundColor: Colors.redDark,
         color: "white",
         onPress: () => props.onDelete(item.id)
@@ -100,7 +115,7 @@ export default function Summary(props) {
     );
 
     return (
-      <Swipeout right={swipeoutBtns}>
+      <Swipeout right={swipeoutBtns} autoClose={true}>
         <View style={styles.item}>
           {label}
           {amount}

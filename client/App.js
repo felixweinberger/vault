@@ -1,20 +1,19 @@
 import React from "react";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
-import { AsyncStorage } from "react-native";
-import { ENV } from "react-native-dotenv";
 
 import AppContainer from "./containers/AppContainer";
 import configureStore from "./redux/store";
 
-// Clear async storage for test only
 console.disableYellowBox = true; // eslint-disable-line
-if (ENV === "dev") {
-  const clearAsyncStorage = async () => {
-    AsyncStorage.clear();
-  };
-  clearAsyncStorage();
-}
+
+// import { AsyncStorage } from "react-native";
+// import { ENV } from "react-native-dotenv";
+// Clear async storage for test only
+// const clearAsyncStorage = async () => {
+//   AsyncStorage.clear();
+// };
+// clearAsyncStorage();
 
 const { store, persistor } = configureStore();
 
