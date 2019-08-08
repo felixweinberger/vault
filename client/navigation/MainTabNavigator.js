@@ -1,81 +1,79 @@
-import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import React from "react";
+import { Platform } from "react-native";
+import {
+  createStackNavigator,
+  createBottomTabNavigator
+} from "react-navigation";
 
-import TabBarIcon from '../components/TabBarIcon';
-import SummaryScreen from '../screens/SummaryScreen';
-import AddExpenseAmountScreen from '../screens/AddExpenseAmountScreen';
-import AddExpenseDetailsScreen from '../screens/AddExpenseDetailsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import SelectCurrencyScreen from '../screens/SelectCurrencyScreen';
-import Colors from '../constants/Colors';
+import TabBarIcon from "../components/TabBarIcon";
+import SummaryScreen from "../screens/SummaryScreen";
+import AddExpenseAmountScreen from "../screens/AddExpenseAmountScreen";
+import AddExpenseDetailsScreen from "../screens/AddExpenseDetailsScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import SelectCurrencyScreen from "../screens/SelectCurrencyScreen";
+import Colors from "../constants/Colors";
 
 const tabNavigatorConfig = {
   tabBarOptions: {
-    activeTintColor: Colors.tintColor,
+    activeTintColor: Colors.tintColor
   },
-  topBar: {
-    leftButtonColor: Colors.orange6,
-    rightButtonColor: Colors.orange6,
-    backButton: {
-      color: Colors.orange6,
-    },
-    tintColor: Colors.tintColor,
-  },
-  initialRouteName: 'AddExpenseStack',
+  initialRouteName: "AddExpenseStack"
 };
 
 const SummaryStack = createStackNavigator({
-  Summary: SummaryScreen,
+  Summary: SummaryScreen
 });
 
 SummaryStack.navigationOptions = {
-  tabBarLabel: 'Summary',
+  tabBarLabel: "Summary",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-stats' : 'md-stats'}
+      name={Platform.OS === "ios" ? "ios-stats" : "md-stats"}
     />
-  ),
+  )
 };
 
 const AddExpenseStack = createStackNavigator({
   AddAmount: AddExpenseAmountScreen,
   AddDetails: AddExpenseDetailsScreen,
-  SelectCurrency: SelectCurrencyScreen,
+  SelectCurrency: SelectCurrencyScreen
 });
 
 AddExpenseStack.navigationOptions = {
-  tabBarLabel: 'Add Expense',
+  tabBarLabel: "Add Expense",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-add-circle${focused ? '' : '-outline'}`
-          : 'md-add-circle'
+        Platform.OS === "ios"
+          ? `ios-add-circle${focused ? "" : "-outline"}`
+          : "md-add-circle"
       }
     />
-  ),
+  )
 };
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
-  SelectCurrency: SelectCurrencyScreen,
+  SelectCurrency: SelectCurrencyScreen
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: "Settings",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name={Platform.OS === "ios" ? "ios-options" : "md-options"}
     />
-  ),
+  )
 };
 
-export default createBottomTabNavigator({
-  SummaryStack,
-  AddExpenseStack,
-  SettingsStack,
-}, tabNavigatorConfig);
+export default createBottomTabNavigator(
+  {
+    SummaryStack,
+    AddExpenseStack,
+    SettingsStack
+  },
+  tabNavigatorConfig
+);
