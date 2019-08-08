@@ -33,6 +33,5 @@ platform :ios do
       export_method: "app-store"
     )
     upload_to_testflight
-    skip_waiting_for_build_processing
   end
 end
