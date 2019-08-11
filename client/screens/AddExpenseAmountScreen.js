@@ -37,7 +37,7 @@ class AddExpenseAmountScreen extends React.Component {
   }
 
   updateLocalState = (cents) => {
-    const padded = cents.toString().padStart(3, '0');
+    const padded = cents.toFixed(0).toString().padStart(3, '0');
     const preComma = padded.slice(0, padded.length - 2);
     const postComma = padded.slice(padded.length - 2);
     const pretty = `${preComma}.${postComma}`;
