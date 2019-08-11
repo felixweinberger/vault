@@ -60,10 +60,10 @@ class AddExpenseAmountScreen extends React.Component {
 
   onNumpadPress = (value) => {
     if (typeof value === 'number') {
-      const cents = Number(this.state.cents.toString() + value.toString());
+      const cents = Number(this.state.cents.toFixed(0).toString() + value.toString());
       this.updateLocalState(cents);
     } else if (value === '⇤') {
-      const centString = this.state.cents.toString();
+      const centString = this.state.cents.toFixed(0).toString();
       const cents = Number(centString.slice(0, centString.length - 1));
       this.updateLocalState(cents);
     } else if (value === '↩︎') {
