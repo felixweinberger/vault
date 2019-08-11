@@ -131,7 +131,8 @@ class AddExpenseDetailsScreen extends React.Component {
     currency: "EUR",
     date: null,
     currencies: this.props.state.entities.currencies,
-    category: null
+    category: null,
+    comment: null,
   };
 
   onFocus = () => {
@@ -222,11 +223,11 @@ class AddExpenseDetailsScreen extends React.Component {
               <View style={styles.inputContainer}>
                 <TextInput
                   placeholder="Category (required)"
-                  value={this.state.category ? this.state.category : null}
+                  value={this.state.category || null}
                   onChangeText={category => this.setState({ category })}
                   style={styles.input}
                 />
-                {this.state.category && (
+                {!!this.state.category && (
                   <Icon.Ionicons
                     name={"ios-backspace"}
                     size={26}
@@ -247,11 +248,11 @@ class AddExpenseDetailsScreen extends React.Component {
             <View style={styles.inputContainer}>
               <TextInput
                 placeholder="Comment"
-                value={this.state.comment ? this.state.comment : null}
+                value={this.state.comment || null}
                 onChangeText={comment => this.setState({ comment })}
                 style={styles.input}
               />
-              {this.state.comment && (
+              {!!this.state.comment && (
                 <Icon.Ionicons
                   name={"ios-backspace"}
                   size={26}
