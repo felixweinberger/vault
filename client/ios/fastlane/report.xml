@@ -5,52 +5,17 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.004062">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.004932">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: ensure_git_status_clean" time="0.016477">
+      <testcase classname="fastlane.lanes" name="1: sync_code_signing" time="17.705832">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: latest_testflight_build_number" time="2.770605">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="3: increment_build_number" time="0.493166">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="4: commit_version_bump" time="5.647066">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="5: add_git_tag" time="0.015304">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="6: push_to_git_remote" time="3.551619">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="7: sync_code_signing" time="6.296988">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="8: build_app" time="311.627979">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="9: upload_to_testflight" time="681.085163">
+      <testcase classname="fastlane.lanes" name="2: build_app" time="163.36319">
         
       </testcase>
     
