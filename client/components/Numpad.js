@@ -85,7 +85,7 @@ export default function Numpad(props) {
       </View>
       <View style={styles.numpadRight}>
         <NumpadButton
-          value={'←'}
+          value={'⇤'}
           style={[styles.numpad__back, { backgroundColor: Colors.greyMid }]}
           onPress={props.onNumpadPress} />
         <NumpadButton
