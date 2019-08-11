@@ -206,7 +206,7 @@ class SettingsScreen extends React.Component {
 
         this.props.updateEntities({
           settings: {
-            automaticBackup: !this.props.state.entities.settings.automaticBackup
+            automaticBackup: false
           }
         });
 
