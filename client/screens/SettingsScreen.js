@@ -284,7 +284,9 @@ class SettingsScreen extends React.Component {
 
   onDownloadPress = async () => {
     try {
-      const { accessToken } = this.props.state.entities.settings.dropboxAuth;
+      const {
+        dropboxAuth: { accessToken }
+      } = this.props.state.entities.settings;
       if (accessToken === null) {
         Alert.alert(
           "Dropbox not linked",
@@ -307,6 +309,29 @@ class SettingsScreen extends React.Component {
 
       console.log("[Dropbox backup] DOWNLOAD from Dropbox complete!");
       const text = response.text();
+      const requiredColumns = [
+        "amount",
+        "currency",
+        "date",
+        "category",
+        "comment",
+        "id",
+        "inMainCurrency",
+        "mainCurrency"
+      ];
+      const columns = text
+        .substr(0, text.indexOf("\n"))
+        .split(",")
+        .reduce((acc, col) => {
+          acc[col] = true;
+          return acc;
+        }, {});
+
+      const isValid = requiredColumns.every(column => columns[column]);
+
+      if (!isValid) {
+        throw new Error("Not all columns required present.");
+      }
 
       const jsonArr = await converter.csv2jsonAsync(text);
       const expenses = {};
@@ -340,8 +365,8 @@ class SettingsScreen extends React.Component {
 
   onAutoBackupPress = () => {
     try {
-      const { accessToken } = this.props.state.entities.settings.dropboxAuth;
-      if (accessToken === null) {
+      const { isLinked } = this.props.state.entities.settings.dropboxAuth;
+      if (!isLinked) {
         Alert.alert(
           "Dropbox not linked",
           "Vault has not been linked to Dropbox yet. Please link your Dropbox account before enabling automatic backups.",
@@ -473,9 +498,13 @@ class SettingsScreen extends React.Component {
           <Text style={styles.status__text}>
             Dropbox status:{" "}
             {isLinked ? (
-              <Text style={[styles.defaultText, { color: "darkgreen" }]}>Linked</Text>
+              <Text style={[styles.defaultText, { color: "darkgreen" }]}>
+                Linked
+              </Text>
             ) : (
-              <Text style={[styles.defaultText, { color: "darkred" }]}>Not linked</Text>
+              <Text style={[styles.defaultText, { color: "darkred" }]}>
+                Not linked
+              </Text>
             )}
           </Text>
         </View>

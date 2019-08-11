@@ -7,9 +7,8 @@ import configureStore from "./redux/store";
 
 console.disableYellowBox = true; // eslint-disable-line
 
-// import { AsyncStorage } from "react-native";
-// import { ENV } from "react-native-dotenv";
 // Clear async storage for test only
+// import { AsyncStorage } from "react-native";
 // const clearAsyncStorage = async () => {
 //   AsyncStorage.clear();
 // };
