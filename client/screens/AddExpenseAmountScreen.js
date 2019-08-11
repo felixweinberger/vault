@@ -77,6 +77,11 @@ class AddExpenseAmountScreen extends React.Component {
   }
 
   onCurrencyPress = () => {
+    const currentUpdate = { current: { ...this.state.current } };
+    currentUpdate.current.id = uuidv4();
+    delete currentUpdate.current.cents;
+    delete currentUpdate.current.pretty;
+    this.props.updateEntities(currentUpdate);
     this.props.navigation.navigate('SelectCurrency', { isGlobalChange: false });
   }
 
