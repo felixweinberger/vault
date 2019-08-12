@@ -24,11 +24,21 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.greyLight
   },
   defaultText: {
-    fontSize: 16
+    fontSize: 16,
+    flex: 3
   },
   option: {
     flex: 1,
     height: 60,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginLeft: 20,
+    marginRight: 20
+  },
+  feedbackSection: {
+    flex: 1,
+    height: 100,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -43,6 +53,7 @@ const styles = StyleSheet.create({
   },
   optionBtn: {
     padding: 5,
+    height: 30,
     width: 100,
     alignItems: "center",
     borderWidth: 1,
@@ -507,6 +518,37 @@ class SettingsScreen extends React.Component {
               </Text>
             )}
           </Text>
+        </View>
+        <View style={styles.sectionHeader}>
+          <View style={styles.sectionHeader__left}>
+            <Text style={styles.sectionHeader__text}>
+              Reporting Bugs & Feedback
+            </Text>
+          </View>
+          <View style={styles.sectionHeader__right}>
+            <Icon.Ionicons
+              name={"ios-bug"}
+              style={styles.sectionHeader__icon}
+            />
+          </View>
+        </View>
+        <View style={styles.feedbackSection}>
+          <Text style={styles.defaultText}>
+            Spotted a bug or missing a feature you really want? Let me know at
+            {' '}
+            <Text style={{ color: Colors.orange6 }} onPress={() => Linking.openURL(`mailto:felix.weinberger@gmail.com`)}>
+              felix.weinberger@gmail.com
+            </Text>.
+            {' '}
+            Feedback is highly appreciated 🙂
+          </Text>
+          <TouchableOpacity
+            style={styles.optionBtn}
+            underlayColor="white"
+            onPress={() => Linking.openURL(`mailto:felix.weinberger@gmail.com`)}
+          >
+            <Text style={styles.defaultText}>✉️ Email</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
