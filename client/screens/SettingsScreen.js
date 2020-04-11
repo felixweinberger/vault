@@ -8,12 +8,13 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  Switch
 } from "react-native";
 import { Linking, WebBrowser, Icon } from "expo";
 import shittyQs from "shitty-qs";
 import RNFetchBlob from "rn-fetch-blob";
 import converter from "json-2-csv";
+import { encode as btoa } from 'base-64'
+
 
 import { updateEntities } from "../redux/actions";
 import { OAUTH_CONFIG, DROPBOX } from "../constants/Dropbox";
@@ -487,7 +488,7 @@ class SettingsScreen extends React.Component {
             <Text style={styles.defaultText}>Upload</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.option}>
+        {/* <View style={styles.option}>
           <Text style={styles.defaultText}>Import CSV from Dropbox</Text>
           <TouchableOpacity
             style={styles.optionBtn}
@@ -496,15 +497,15 @@ class SettingsScreen extends React.Component {
           >
             <Text style={styles.defaultText}>Download</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.option}>
+        </View> */}
+        {/* <View style={styles.option}>
           <Text style={styles.defaultText}>Automatic backup</Text>
           <Switch
             value={this.props.state.entities.settings.automaticBackup}
             trackColor={{ true: Colors.orange6, false: "lightgrey" }}
             onValueChange={this.onAutoBackupPress}
           />
-        </View>
+        </View> */}
         <View style={styles.option}>
           <Text style={styles.status__text}>
             Dropbox status:{" "}
@@ -519,7 +520,7 @@ class SettingsScreen extends React.Component {
             )}
           </Text>
         </View>
-        <View style={styles.sectionHeader}>
+        {/* <View style={styles.sectionHeader}>
           <View style={styles.sectionHeader__left}>
             <Text style={styles.sectionHeader__text}>
               Reporting Bugs & Feedback
@@ -549,7 +550,7 @@ class SettingsScreen extends React.Component {
           >
             <Text style={styles.defaultText}>✉️ Email</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </ScrollView>
     );
   }
